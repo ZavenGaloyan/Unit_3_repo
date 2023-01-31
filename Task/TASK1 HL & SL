@@ -1,6 +1,6 @@
- # TASK1 CREATING VARIOUS CONVERTERS
- ## SL YEN TO USD CONVERTER
-```.kv
+ #  TASK1 CREATING VARIOUS CONVERTERS
+ ##  SL YEN TO USD CONVERTER
+```.py
 from kivy.lang import Builder
 from kivymd.app import MDApp
 
@@ -78,10 +78,6 @@ Screen:
             font_size: 60
             pos_hint: {"center_x": 0.19,"center_y":1}
 
-
-
-
-
         MDRoundFlatButton:
             icon: "currency-jpy"
             text: "YEN to USD"
@@ -130,3 +126,4 @@ Screen:
             padding_y: 1
 
 ```
+### HL part
