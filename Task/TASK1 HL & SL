@@ -1,0 +1,132 @@
+## TASK1 CREATING VARIOUS CONVERTERS
+### SL YEN TO USD CONVERTER
+```.py
+from kivy.lang import Builder
+from kivymd.app import MDApp
+
+
+class Currency_converter(MDApp):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+
+    def build(self):
+        self.theme_cls.theme_style = "Light"
+        self.theme_cls.primary_palette = "Blue"
+        return Builder.load_file('Currency_converter.kv')
+
+    def USD_YEN(self):
+        self.output_amount = self.root.ids.Converted.text
+        self.input_amount = self.root.ids.user.text
+        self.Total = 0
+        if self.input_amount.isdigit():
+            self.Total = f"{int(self.input_amount)*130}¥"
+            print(self.Total)
+        else:
+            self.output_amount = "Enter Posative value"
+
+
+    def YEN_USD(self):
+        self.output_amount = self.root.ids.Converted.text
+        self.input_amount = self.root.ids.user.text
+        self.Total = 0
+        if self.input_amount.isdigit():
+            self.Total= f"{int(self.input_amount)/130}$"
+            print(type(self.input_amount))
+        else:
+            self.Total = "Enter Positive value"
+
+
+    def convert(self):
+        self.root.ids.Converted.text = f"TOTAL:{self.Total}"
+
+
+
+
+m = Currency_converter()
+m.run()
+```
+### KIVY FILE
+```.py
+Screen:
+
+    MDCard:
+        size_hint: None, None
+        size: 700, 500
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+        elevation: 10
+        padding: 25
+        spacing: 25
+        orientation: 'vertical'
+
+        MDLabel:
+            id: welcome_label
+            text: "Currency Converter"
+            font_size: 40
+            halign: 'center'
+            size_hint_y: None
+            height: self.texture_size[1]
+            padding_y: -5
+
+        MDTextField:
+            id: user
+            hint_text: "Amount"
+            icon_right: "dollar"
+            size_hint_x: None
+            halign: 'left'
+            width: 200
+            font_size: 60
+            pos_hint: {"center_x": 0.19,"center_y":1}
+
+
+
+
+
+        MDRoundFlatButton:
+            icon: "currency-jpy"
+            text: "YEN to USD"
+            font_size: 25
+            pos_hint: {"center_x": 0.5}
+            halign: 'left'
+            theme_text_color: "Custom"
+            text_color: "red"
+            line_color: "red"
+            theme_icon_color: "Custom"
+            icon_color: "blue"
+            halign: 'left'
+            on_press: app.YEN_USD()
+
+        MDRoundFlatButton:
+            icon: "currency-usd"
+            text: "USD to YEN"
+            font_size: 25
+            pos_hint: {"center_x": 0.5}
+            theme_text_color: "Custom"
+            text_color: "blue"
+            line_color: "blue"
+            theme_icon_color: "Custom"
+            icon_color: "blue"
+            on_press: app.USD_YEN()
+
+        MDRectangleFlatIconButton:
+            icon: "cash-plus"
+            text: "Convert"
+            pos_hint: {"center_x": 0.5}
+            theme_text_color: "Custom"
+            text_color: "black"
+            line_color: "black"
+            theme_icon_color: "Custom"
+            icon_color: "blue"
+            font_size: 20
+            on_press: app.convert()
+
+        MDLabel:
+            id: Converted
+            text: "Total:"
+            font_size: 40
+            halign: 'left'
+            size_hint_y: None
+            height: self.texture_size[1]
+            padding_y: 1
+
+```
