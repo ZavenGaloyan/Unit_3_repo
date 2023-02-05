@@ -84,4 +84,4 @@ def test_classroom():
         classroom.get_average_score()
   ```
  ## Test evidence
- ![]()
+ ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Quizzes/Quiz-036_TEST.jpg)
