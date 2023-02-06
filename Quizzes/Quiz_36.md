@@ -85,3 +85,5 @@ def test_classroom():
   ```
  ## Test evidence
  ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Quizzes/Quiz-036_TEST.jpg)
+ ## UML Diagram
+ ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Quizzes/QUIZ_26%20UML.drawio.png)
