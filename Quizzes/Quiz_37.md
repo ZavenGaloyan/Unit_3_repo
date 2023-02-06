@@ -66,3 +66,5 @@ def test_years_validation():
 ```
  ## TEST Evidence
  ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Quizzes/Quiz-037_TEST.jpg)
+  ## UML Diagram
+ ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Quizzes/QUIZ_037.drawio.png)
