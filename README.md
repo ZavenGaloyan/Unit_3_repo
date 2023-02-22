@@ -1,8 +1,8 @@
-# Unit_3_repo
+# Unit 3 Project: Gym logging application
 ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/atthegym.jpg)
  # Criteria A:
  ## Problem definition
-
+My client has 
  ## Success Criteria
 1.the login sysmtem sign up system s
 
@@ -14,4 +14,4 @@
 
 5.calender system
 
-6.
+6.Suggested/ explore workout page
