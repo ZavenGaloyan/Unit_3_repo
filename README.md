@@ -1,5 +1,5 @@
 # Unit_3_repo
-![](
+![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/atthegym.jpg)
  # Criteria A:
  ## Problem definition
 
