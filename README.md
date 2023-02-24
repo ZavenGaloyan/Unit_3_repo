@@ -19,11 +19,9 @@ The app should support multiple types of exercises, including weightlifting, car
 Users should be able to view their statistics for individual exercises, muscle groups, or overall fitness levels.
 The app should provide personalized recommendations for improving workout performance based on users' data and goals.
 
-Calendar system:
 5.The app should include a calendar system, allowing users to view their workout logs by date and track their progress over time.
 The calendar should be user-friendly and interactive, allowing users to easily add or edit workout logs directly from the calendar view.
 
-Suggested/ explore workout page:
 6.The app should provide a suggested or explore workout page, allowing users to discover new exercises or workouts to add to their routine.
 The suggestions should be personalized to the user's fitness level, goals, and workout history, and they should include detailed instructions and videos to ensure proper form and technique.
 Users should be able to save or favorite workouts for later use, or add them directly to their workout log.
