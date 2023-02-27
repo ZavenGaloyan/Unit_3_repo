@@ -25,3 +25,5 @@ The calendar should be user-friendly and interactive, allowing users to easily a
 6.The app should provide a suggested or explore workout page, allowing users to discover new exercises or workouts to add to their routine.
 The suggestions should be personalized to the user's fitness level, goals, and workout history, and they should include detailed instructions and videos to ensure proper form and technique.
 Users should be able to save or favorite workouts for later use, or add them directly to their workout log.
+ ## SOURCE
+ https://www.pngegg.com/it/png-zugos
