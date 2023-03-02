@@ -1,6 +1,5 @@
 # Unit 3 Project: Gym logging application
 ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/atthegym.jpg)
-![curls-gym](https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif)
 
  # Criteria A:
  ## Problem definition
