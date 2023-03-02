@@ -1,5 +1,7 @@
 # Unit 3 Project: Gym logging application
 ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/atthegym.jpg)
+![curls-gym](https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif)
+
  # Criteria A:
  ## Problem definition
 My client wants an application that can track their gym progress and workouts in a user-friendly and efficient way. The app should allow users to create a profile, set fitness goals, log their daily exercises, and monitor their progress over time. The user should be able to view and analyze their workout data, including the number of reps, sets, and weights lifted for each exercise. The app should also provide personalized workout recommendations based on the user's fitness level, goals, and progress. Additionally, the app should have social features to allow users to connect and motivate each other, such as sharing their workout logs and progress on social media platforms. The app should be available on both python supporting platforms, and it should have a clean and modern user interface that is easy to use and navigate. The app should be secure and protect users' personal information and workout data.
