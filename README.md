@@ -30,3 +30,8 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
 
  ## SOURCE
  https://www.pngegg.com/it/png-zugos
+ https://www.muscleandstrength.com/articles/arnold-schwarzenegger-superset-workout
+ https://revolutionaryprogramdesign.com/ronnie-coleman-training-program/
+ https://www.shape.com/celebrities/celebrity-workouts/i-worked-out-dwayne-rock-johnson#:~:text=The%20Rock's%20Workout%20Routine,and%20seven%20are%20rest%20days.
+ https://gymtalk.com/rich-piana-8-hour-arm-workout/
+ https://www.sportskeeda.com/health-and-fitness/cbum-workout-split-olympia-winner-chris-bumstead-s-training-split-explained
