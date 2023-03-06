@@ -1,6 +1,4 @@
 # Unit 3 Project: Gym logging application
-![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Unit_3_flow.drawio%20(1).png)
-
  # Criteria A:
  ## Problem definition
 My client wants an application that can track their gym progress and workouts in a user-friendly and efficient way. The app should allow users to create a profile, set fitness goals, log their daily exercises, and monitor their progress over time. The user should be able to view and analyze their workout data, including the number of reps, and weights lifted for each exercise. The app should also provide workout recommendations based on the user's fitness level, goals, and progress. The app should be available on both python supporting platforms, and it should have a clean and modern user interface that is easy to use and navigate. The app should be secure and protect users' personal information and workout data.
@@ -27,7 +25,7 @@ Kivy is a Python framework for building graphical user interfaces (GUIs). Its cr
 Combining Python, SQL databases, and Kivy can provide an efficient and flexible way to build a workout tracking application with a user-friendly GUI interface. Developers can use Python to create the logic of the application, SQL databases to store and manage the workout data, and Kivy to build an interactive and user-friendly GUI. The combination of these tools provides an efficient and scalable way to build a modern-looking application that can help clients achieve their fitness goals by tracking and analyzing their workout progress. Additionally, these tools have a large community and support, providing developers with a wide range of resources and documentation to help them build and maintain the application.
  # Criteria B:
  ## Flow Chart
- ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Unit_3_flow.drawio.png)
+ ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Unit_3_flow.drawio%20(2).png)
  ## Record of tasks
 |    | Planned Action                                            | Planned Outcome                                                                                                                                         | Design Cycle      | Time Estimate      | Completion Date | Criteria |
 |----|-----------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|--------------------|-----------------|----------|
