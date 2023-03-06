@@ -26,6 +26,8 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
  # Criteria B:
  ## Flow Chart
  ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Unit_3_flow.drawio%20(2).png)
+ ## System Diagram
+ ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/System_diagram.png)
  ## Record of tasks
 |    | Planned Action                                            | Planned Outcome                                                                                                                                         | Design Cycle      | Time Estimate      | Completion Date | Criteria |
 |----|-----------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|--------------------|-----------------|----------|
