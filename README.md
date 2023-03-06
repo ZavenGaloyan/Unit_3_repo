@@ -28,29 +28,30 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
  # Criteria B:
  ## Flow Chart
  ## Record of tasks
- 	Planned Action	Planned Outcome	Design Cycle	Time Estimate	Completion Date	Criteria
-1	First meeting with myy client	Understand the clients issue and their  needs and requirements 	Planning	15 minutes	Feb 17,	A
-2	Create a Problem Defintion	To have all of the requirements of the client written down	Planning	45 minutes	Feb 17, 	A
-3	Create a Success Criteria	Create a set of goals for the project to accomplish it successfully	Planning	20 minutes	Feb 18,	A
-4	Second meeting with client	To update and changes that need to be made on the succes criteria	Planning	15 minutes	Feb 20,	A
-5	Complete Rationale for the Proposed solution and Criteria	How understand the resoning behind the project and resources required	Planning	30 minutes	Feb 21,	A
-6	Creating flowcharts	To create a flow chart describing a certain aspect of the code with sudo code	Solution Overview	1  hour	Feb 23,	B
-7	Creating wireframe diagram	To create a wire frame diagram to show the app works with the differant screens	Solution Overview	1 hours 30 minutes	Feb 24,	B
-8	Creating system diagram	To show how the overall apps works with the computer system that it is operating on 	Solution Overview	1 hour	 Feb 24,	B
-9	Creating ER diagram	To show an entity relation diagram of the code	Solution Overview	30 minutes	Feb 25,	B
-10	Creating UML diagram	It is used for visually representing a system along with its main actors, roles, actions, artifacts or classes	Solution Overview	1 hour 45	Feb 26 ,	B
-11	Adding descriptions to Criteria B	This will explain all of the aspects of Criteria B so it is easy to understand for the user	Solution Overview	1 hour	Feb 26 ,	B
-12	Creating Test Plan	This will be used to test the functionality of the product that I have come up with	Solution Overview	2 hours	Feb 27 ,	B
-13	Login and registration	To have a functional GUI Login and registration system that connected to an SQL database	Development	2 hours	march 4,	C
-14	Create a Home screen that contains the nessisary criteria	How have a user friendly UI for the client to navigate	Development	30 minutes	march 4,	C
-15	Creating a logging page 	This provides a space for the client to see their gmy logs directly from the database. To which they may add logs through and add information page	Development	3 hours	march 4,	C
-16	Creating a Calender Page	This will allow the user to visualize what workout they completed during that month and the specific days they happened.	Development	3 hours	march 4,	C
-17	Connecting database to Calendar	This will sync any inputs in the logs to a calendar	Development	4 hours	march 5,	C
-18	Explore page	This is a place where users can come to see their favorite influencers training programs and see if they would like to implement them in their training	Development	2 hours	march 5,	C
-19	Adding astetics to the page	To make overall app more visaully apealing	Development	30 min	march 5,	C
-20	Validation regarding user inputs	To make sure that he app doesn't encounter an error if it were to crash	Development	3 hours	march 5,	C
-21	Statistics page written stats	To create written statistics based off of the user inputs on their gym progress	Development	2 hours	march 6,	C
-22	Statistics page visaul stats	Providing a visul representaion of the users progression in working out based off of their inputs	Development	2 hours	march 6,	C
+|    | Planned Action                                            | Planned Outcome                                                                                                                                         | Design Cycle      | Time Estimate      | Completion Date | Criteria |
+|----|-----------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|--------------------|-----------------|----------|
+| 1  | First meeting with myy client                             | Understand the clients issue and their  needs and requirements                                                                                          | Planning          | 15 minutes         | Feb 17,         | A        |
+| 2  | Create a Problem Defintion                                | To have all of the requirements of the client written down                                                                                              | Planning          | 45 minutes         | Feb 17,         | A        |
+| 3  | Create a Success Criteria                                 | Create a set of goals for the project to accomplish it successfully                                                                                     | Planning          | 20 minutes         | Feb 18,         | A        |
+| 4  | Second meeting with client                                | To update and changes that need to be made on the succes criteria                                                                                       | Planning          | 15 minutes         | Feb 20,         | A        |
+| 5  | Complete Rationale for the Proposed solution and Criteria | How understand the resoning behind the project and resources required                                                                                   | Planning          | 30 minutes         | Feb 21,         | A        |
+| 6  | Creating flowcharts                                       | To create a flow chart describing a certain aspect of the code with sudo code                                                                           | Solution Overview | 1  hour            | Feb 23,         | B        |
+| 7  | Creating wireframe diagram                                | To create a wire frame diagram to show the app works with the differant screens                                                                         | Solution Overview | 1 hours 30 minutes | Feb 24,         | B        |
+| 8  | Creating system diagram                                   | To show how the overall apps works with the computer system that it is operating on                                                                     | Solution Overview | 1 hour             | Feb 24,         | B        |
+| 9  | Creating ER diagram                                       | To show an entity relation diagram of the code                                                                                                          | Solution Overview | 30 minutes         | Feb 25,         | B        |
+| 10 | Creating UML diagram                                      | It is used for visually representing a system along with its main actors, roles, actions, artifacts or classes                                          | Solution Overview | 1 hour 45          | Feb 26 ,        | B        |
+| 11 | Adding descriptions to Criteria B                         | This will explain all of the aspects of Criteria B so it is easy to understand for the user                                                             | Solution Overview | 1 hour             | Feb 26 ,        | B        |
+| 12 | Creating Test Plan                                        | This will be used to test the functionality of the product that I have come up with                                                                     | Solution Overview | 2 hours            | Feb 27 ,        | B        |
+| 13 | Login and registration                                    | To have a functional GUI Login and registration system that connected to an SQL database                                                                | Development       | 2 hours            | march 4,        | C        |
+| 14 | Create a Home screen that contains the nessisary criteria | How have a user friendly UI for the client to navigate                                                                                                  | Development       | 30 minutes         | march 4,        | C        |
+| 15 | Creating a logging page                                   | This provides a space for the client to see their gmy logs directly from the database. To which they may add logs through and add information page      | Development       | 3 hours            | march 4,        | C        |
+| 16 | Creating a Calender Page                                  | This will allow the user to visualize what workout they completed during that month and the specific days they happened.                                | Development       | 3 hours            | march 4,        | C        |
+| 17 | Connecting database to Calendar                           | This will sync any inputs in the logs to a calendar                                                                                                     | Development       | 4 hours            | march 5,        | C        |
+| 18 | Explore page                                              | This is a place where users can come to see their favorite influencers training programs and see if they would like to implement them in their training | Development       | 2 hours            | march 5,        | C        |
+| 19 | Adding astetics to the page                               | To make overall app more visaully apealing                                                                                                              | Development       | 30 min             | march 5,        | C        |
+| 20 | Validation regarding user inputs                          | To make sure that he app doesn't encounter an error if it were to crash                                                                                 | Development       | 3 hours            | march 5,        | C        |
+| 21 | Statistics page written stats                             | To create written statistics based off of the user inputs on their gym progress                                                                         | Development       | 2 hours            | march 6,        | C        |
+| 22 | Statistics page visaul stats                              | Providing a visul representaion of the users progression in working out based off of their inputs                                                       | Development       | 2 hours       
  
 ![curls-gym](https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif)
 
