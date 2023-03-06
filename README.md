@@ -1,5 +1,5 @@
 # Unit 3 Project: Gym logging application
-![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/atthegym.jpg)
+![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Unit_3_flow.drawio%20(1).png)
 
  # Criteria A:
  ## Problem definition
