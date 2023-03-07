@@ -30,6 +30,8 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
  ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/System_diagram.png)
  ## WireFrame Diagram
  ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Screenshot_20230307_213113_Samsung%20Notes.jpg)
+ ## UML Diagram
+ ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/UML.drawio.png)
  ## Record of tasks
 |    | Planned Action                                            | Planned Outcome                                                                                                                                         | Design Cycle      | Time Estimate      | Completion Date | Criteria |
 |----|-----------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|--------------------|-----------------|----------|
