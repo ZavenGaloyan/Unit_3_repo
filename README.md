@@ -74,7 +74,25 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
 | 20 | Validation regarding user inputs                          | To make sure that he app doesn't encounter an error if it were to crash                                                                                 | Development       | 3 hours            | march 5,        | C        |
 | 21 | Statistics page written stats                             | To create written statistics based off of the user inputs on their gym progress                                                                         | Development       | 2 hours            | march 6,        | C        |
 | 22 | Statistics page visaul stats                              | Providing a visul representaion of the users progression in working out based off of their inputs                                                       | Development       | 2 hours       
- # Criteria C:
+ # Criteria C: Development:
+ ```.py
+ class database_worker:
+    def __init__(self, name):
+        self.connection = sqlite3.connect(name)
+        self.cursor = self.connection.cursor()
+
+    def search(self, query):
+        result = self.cursor.execute(query).fetchall()
+        return result
+
+    def run_save(self, query):
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def close(self):
+        self.connection.close()
+```
+This code defines a class called database_worker that provides methods for working with a SQLite database. The search method executes a SQL query using the cursor's execute method and retrieves the results as a list of tuples using the fetchall method. The run_save method executes a SQL query using the cursor's execute method and commits the changes to the database using the connection's commit method. The close method closes the connection to the database using the connection's close method. Overall, this class provides a simple interface for searching and modifying data in a SQLite database.
  
  # Criteria D:
  ## Citation
