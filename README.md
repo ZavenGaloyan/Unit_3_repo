@@ -92,8 +92,112 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
     def close(self):
         self.connection.close()
 ```
-**Fig-6**:The code above defines a class called database_worker that provides methods for working with a SQLite database. The search method executes a SQL query using the cursor's execute method and retrieves the results as a list of tuples using the fetchall method. The run_save method executes a SQL query using the cursor's execute method and commits the changes to the database using the connection's commit method. The close method closes the connection to the database using the connection's close method. Overall, this class provides a simple interface for searching and modifying data in a SQLite database.This is a vital part of the program and will be used all throughout the program for simiplifying the process of working with the databases
- 
+**Fig-6**:The code above defines a class called database_worker that provides methods for working with a SQLite database. The search method executes a SQL query using the cursor's execute method and retrieves the results as a list of tuples using the fetchall method. The run_save method executes a SQL query using the cursor's execute method and commits the changes to the database using the connection's commit method. The close method closes the connection to the database using the connection's close method. Overall, this class provides a simple interface for searching and modifying data in a SQLite database.This is a vital part of the program and will be used all throughout the program for simiplifying the process of working with the databases.
+```.py
+class HomeScreen(MDScreen):
+    def open_info(self):
+        self.parent.current = "ViewInfo"
+
+    def open_Statistics(self):
+        self.parent.current = "Statistics"
+
+    def open_Calender(self):
+        self.parent.current = "Calender"
+    def open_Explore(self):
+        self.parent.current = "Explore"
+ ``` 
+ **Fig-7**:The code above code defines the class called HomeScreen that inherits from the MDScreen class. It provides four methods:open_info, open_Statistics, open_Calender, and open_Explore, that change the current screen in the app to one of the screens named ViewInfo, Statistics, Calender, or Explore, respectively. The open_info, open_Statistics, open_Calender, and open_Explore methods use the parent attribute to access the parent widget (which is the screen manager) and set the current attribute to the name of the target screen. This causes the app to switch to the target screen, displaying it to the user. This allows for a simple and user frendly home screen for the program.
+ ```.kv
+ ScreenManager:
+    LoginScreen:
+        name: "LoginScreen"
+
+    RegistrationScreen:
+        name: "RegistrationScreen"
+
+    HomeScreen:
+        name: "HomeScreen"
+
+    ViewInfo:
+        name: "ViewInfo"
+    AddInfo:
+        name: "AddInfo"
+
+    Calender:
+        name: "Calender"
+
+    Statistics:
+        name: "Statistics"
+
+    Explore:
+        name: "Explore"
+```  
+ **Fig-7(2)**: The code above is in the kivy files that works along with the python program. The kivy aboves is what works with python code in Fig-7 to manage the screens
+ ```.py
+ class LoginScreen(MDScreen):
+
+    result = None
+    def try_login(self):
+        print("User tried to login")
+        # Get the input username and password and print it
+        uname = self.ids.uname.text
+        passwd = self.ids.passwd.text
+        hash_test = encrypt_password(passwd)
+        if uname != "" and passwd != "":
+            query = f"SELECT * from users WHERE username='{uname}' and password='{passwd}'"
+            db = database_worker("db_login.db")
+            result = db.search(query=query)
+            print(result)
+            LoginScreen.result = result
+            db.close()
+            if len(result)==1:
+                print("Login successful")
+                self.parent.current = "HomeScreen"
+                self.ids.uname.text = ""
+                self.ids.passwd.text = ""
+            else:
+                self.ids.welcome.text = "Login incorrect"
+        else:
+            self.ids.welcome.text = "Fill in all required text boxes"
+
+    def Clear(self):
+        self.ids.uname.text = ""
+        self.ids.passwd.text = ""
+ ```
+  **Fig-8**:The code seen above defines the class called LoginScreen that inherits from the MDScreen class. It provides two methods named try_login and Clear, which handle user login attempts and clearing of input fields. The try_login method first retrieves the user input for username and password, and encrypts the password using the encrypt_password function. It then constructs a SQL query to search for a user with matching username and password in a SQLite database called "db_login.db". The query is executed using the database_worker class which was previosly discussed in by Fig-6, and the result is stored in a class-level variable called result. If the query returns exactly one row, the user is considered to have successfully logged in, and the app switches to the "HomeScreen" screen. Otherwise, an error message is displayed.The Clear method is from a button that simply clears the input fields for the username and password, making it easier for the user to put new login credentials.
+  
+ ```.py
+ class RegistrationScreen(MDScreen):
+    def try_register(self):
+        uname = self.ids.uname.text
+        email = self.ids.email.text
+        passwd = self.ids.passwd.text
+        passwd_check = self.ids.passwd_check.text
+        hash = encrypt_password(passwd)
+        if uname != "" and passwd != "" and email != "" and passwd != "" and passwd_check != "":
+            if len(passwd) > 5:
+                if passwd != passwd_check:
+                    self.ids.passwd_check.error = True
+                else:
+                    db = database_worker("db_login.db")
+                    query = f"INSERT into users (email, password, username, HASH) values('{email}', '{passwd}','{uname}','{hash}')"
+                    db.run_save(query)
+                    db.close()
+                    print("Registration completed")
+                    self.parent.current = "LoginScreen"
+                    self.ids.uname.text = ""
+                    self.ids.email.text = ""
+                    self.ids.passwd.text = ""
+                    self.ids.passwd_check.text = ""
+            else:
+                self.ids.passwd.error = True
+        else:
+            self.ids.uname.error = True
+            self.ids.passwd.error = True
+            self.ids.passwd_check.error = True
+            self.ids.email.error = True
+ ```
+ **Fig-9**:The code given above defines a class called RegistrationScreen that inherits from the MDScreen class. It provides a single method called try_register that handles user registration attempts. The try_register method first retrieves the user input for username, email, password, and password confirmation. It then checks if all required fields are filled out and if the password meets the minimum length requirement. If the input passes these checks, the method verifies that the password and password confirmation fields match. If the input passes all checks, the method constructs an SQL query to insert the user's information into a SQLite database called "db_login.db". The query is executed using the database_worker class, and the method switches the app to the LoginScreen screen so that it is easier to log in once the registration has been completed. If any of the input fields fail to pass the required checks, the method highlights the corresponding fields with an error indication.
  # Criteria D:
  ## Citation
  ![curls-gym](https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif)
