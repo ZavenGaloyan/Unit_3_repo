@@ -92,7 +92,7 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
     def close(self):
         self.connection.close()
 ```
-This code defines a class called database_worker that provides methods for working with a SQLite database. The search method executes a SQL query using the cursor's execute method and retrieves the results as a list of tuples using the fetchall method. The run_save method executes a SQL query using the cursor's execute method and commits the changes to the database using the connection's commit method. The close method closes the connection to the database using the connection's close method. Overall, this class provides a simple interface for searching and modifying data in a SQLite database.
+**Fig-6**:The code above defines a class called database_worker that provides methods for working with a SQLite database. The search method executes a SQL query using the cursor's execute method and retrieves the results as a list of tuples using the fetchall method. The run_save method executes a SQL query using the cursor's execute method and commits the changes to the database using the connection's commit method. The close method closes the connection to the database using the connection's close method. Overall, this class provides a simple interface for searching and modifying data in a SQLite database.This is a vital part of the program and will be used all throughout the program for simiplifying the process of working with the databases
  
  # Criteria D:
  ## Citation
