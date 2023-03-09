@@ -540,8 +540,8 @@ class Statistics(MDScreen):
             plt.show(block=True)
 ```
 **Fig-13(A)**
-```
-```
+
+
 ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Screenshot%202023-03-09%20225236.png)
 
 **Fig-13(B)**
