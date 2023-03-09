@@ -558,7 +558,6 @@ class Statistics(MDScreen):
 
  # Criteria D:
  ## Citation
- ![curls-gym](https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif)
 
  https://www.muscleandstrength.com/articles/arnold-schwarzenegger-superset-workout:
 Muscle and Strength. "Arnold Schwarzenegger Superset Workout Program." Accessed on March 9, 2023.
@@ -602,4 +601,9 @@ Programiz. "Python Datetime Module." Accessed on March 9, 2023.
 https://docs.python.org/3/library/datetime.html:
 Python Software Foundation. "datetime — Basic Date and Time Types." Accessed on March 9, 2023.
 
-![curls-gym](https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif)
+
+ <p align="center">
+  <img src="https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif" alt="Example image">
+</p>
+
+
