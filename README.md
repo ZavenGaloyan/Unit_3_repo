@@ -132,7 +132,7 @@ class HomeScreen(MDScreen):
     Explore:
         name: "Explore"
 ```  
- **Fig-7(2)**: The code above is in the kivy files that works along with the python program. The kivy aboves is what works with python code in Fig-7 to manage the screens
+ **Fig-7(2)**: The code above is in the kivy file that works in unison along with the python file. The kivy aboves is what connects with the python code in Fig-7 to manage the screens of the program
  ```.py
  class LoginScreen(MDScreen):
 
@@ -198,6 +198,353 @@ class HomeScreen(MDScreen):
             self.ids.email.error = True
  ```
  **Fig-9**:The code given above defines a class called RegistrationScreen that inherits from the MDScreen class. It provides a single method called try_register that handles user registration attempts. The try_register method first retrieves the user input for username, email, password, and password confirmation. It then checks if all required fields are filled out and if the password meets the minimum length requirement. If the input passes these checks, the method verifies that the password and password confirmation fields match. If the input passes all checks, the method constructs an SQL query to insert the user's information into a SQLite database called "db_login.db". The query is executed using the database_worker class, and the method switches the app to the LoginScreen screen so that it is easier to log in once the registration has been completed. If any of the input fields fail to pass the required checks, the method highlights the corresponding fields with an error indication.
+```.kv
+<LoginScreen>:
+    FitImage:
+        source:"gym_background.jpg"
+    MDCard:
+        size_hint: .6, .8
+        pos_hint: {"center_x":.5, "center_y":.5}
+        orientation: "vertical"
+
+        MDLabel:
+            size_hint: 1,.2
+            font_style: "H2"
+            text: "Login"
+            halign: "center"
+            spacing: 0
+        MDLabel:
+            id: welcome
+            size_hint: 1,.1
+            font_style: "H2"
+            text: "Welcome to your Personalised Gym ledger"
+            font_size: "20sp"
+            halign: "center"
+            spacing: 0
+
+        MDTextField:
+            id: uname
+            hint_text: "Enter Username or Email"
+            icon_right: "account"
+            size_hint: .8, .1
+            pos_hint: {"center_x":.5}
+
+        MDTextField:
+            id:passwd
+            hint_text: "Enter password"
+            icon_right: "eye-off"
+            password: True
+            size_hint: .8, .1
+            pos_hint: {"center_x":.5}
+
+        MDBoxLayout:
+            size_hint: 1,.1
+
+            MDRaisedButton:
+                id: login
+                text: "Login"
+                md_bg_color: "##d50000"
+                on_press: root.try_login()
+                size_hint: .5, .8
+            MDRaisedButton:
+                text: "Clear"
+                md_bg_color: "#ed8000"
+                on_press: root.Clear()
+                size_hint: .2, .3
+                pos_hint: {"center_y":.99}
+
+            MDRaisedButton:
+                text: "Register"
+                md_bg_color: "#d50000"
+                on_press: root.parent.current = "RegistrationScreen"
+                size_hint: .5, .8
+
+
+
+<RegistrationScreen>:
+    FitImage:
+        source:"gym_background.jpg"
+    MDCard:
+        size_hint: .6, .8
+        pos_hint: {"center_x":.5, "center_y":.5}
+        orientation: "vertical"
+
+        MDRaisedButton:
+            id: Go_back
+            text: "Back"
+            icon_left: "arrow-left-circle-outline"
+            md_bg_color: "#d50000"
+            on_press: root.parent.current = "LoginScreen"
+            size_hint: .2, .05
+            pos_hint: {"center_x":.1, "center_y":1}
+
+        MDLabel:
+            size_hint: 1,.1
+            font_style: "H4"
+            text: "Register"
+            halign: "center"
+
+        MDTextField:
+            id: uname
+            hint_text: "Enter Username "
+            icon_right: "account"
+            size_hint: .8, .1
+            pos_hint: {"center_x":.5}
+            helper_text_mode: "on_error"
+            helper_text: "Fill in all required boxes(MUST BE MORE THAN 5 CHARACTERS)"
+
+
+        MDTextField:
+            id: email
+            hint_text: "Enter email"
+            icon_right: "email"
+            size_hint: .8, .1
+            pos_hint: {"center_x":.5}
+            helper_text_mode: "on_error"
+            helper_text: "Email must contain @"
+
+        MDTextField:
+            id:passwd
+            hint_text: "Enter password"
+            icon_right: "eye-off"
+            password: True
+            size_hint: .8, .1
+            pos_hint: {"center_x":.5}
+            helper_text_mode: "on_error"
+            helper_text: "Fill in all required boxes(MUST BE MORE THAN 5 CHARACTERS)"
+
+
+        MDTextField:
+            id:passwd_check
+            hint_text: "Re-enter password"
+            icon_right: "eye-off"
+            password: True
+            size_hint: .8, .1
+            pos_hint: {"center_x":.5}
+            helper_text_mode: "on_error"
+            helper_text: "Password DOES not Match"
+
+
+
+        MDBoxLayout:
+            size_hint: 1,.1
+
+            MDRaisedButton:
+                text: "Register"
+                md_bg_color: "#d50000"
+                on_press: root.try_register()
+                size_hint: 1, 1
+```
+**Fig-10**: The code above is the front end kivy code that correlates to the python code for the login and registration as seen in Fig-8 and Fig-9.
+```.py
+class ViewInfo(MDScreen):
+    #LoginScreen().try_login()
+    data_table = None
+    def update(self):
+        result1 = LoginScreen.result
+        user_id = result1[0][0]
+        print(user_id)
+        db = database_worker("Logging_info.db")
+        query = f"SELECT * FROM Data_log WHERE user_id = '{user_id}'"
+        data = db.search(query)
+        db.close()
+        self.data_table.update_row_data(None, data)
+
+    def on_pre_enter(self, *args):
+        self.data_table = MDDataTable(
+            size_hint=(.7, .7),
+            pos_hint={"center_x": .5, "center_y": .55},
+            use_pagination=True,
+            check=True,
+            column_data=[("PersonID", 30), ("Exercise", 20), ("Weight", 20), ("Reps", 20), ("Date", 20), ("User_id",20)]
+        )
+
+        self.data_table.bind(on_row_press=self.row_pressed)
+        self.data_table.bind(on_check_press=self.check_pressed)
+        self.add_widget(self.data_table)
+        self.update()
+
+    def row_pressed(self, table, row):
+        print("a row was checked ", row.text)
+        row.md_bg_color = '#FFFFFFF'
+
+    def check_pressed(self, table, row):
+        print("a row was pressed ", row)
+
+    def delete(self):
+        rows_checked = self.data_table.get_row_checks()
+        print(rows_checked)
+        db = database_worker("Logging_info.db")
+        for r in rows_checked:
+            id = r[0]
+            query = f"delete from Data_log where PersonID={id}"
+            db.run_save(query)
+        db.close()
+  ```
+**Fig-11**: The code seen above contains the ViewInfo class with connects that inherits from the MDScreen class. It allows the user to interact with a data table that is displayed on the screen. The MDDataTable widget from the KivyMD package is used to create the table. The methods update(), on pre enter(), row pressed(), check pressed(), and delete are all part of the ViewInfo class and are their own respective functions. Using a SQL query, the update() method fetches data from a database and inserts the new values into the table's data. As the screen is about to be displayed, the on pre enter() method is called, which creates the MDDataTable widget, binds its events to the appropriate methods, and adds it to the screen. Essentialy displaying all of the data in the SQL database for the user to interact with.
+class Calender(MDScreen):
+```.py
+    def on_pre_enter(self):
+        result1 = LoginScreen.result
+        user_id = result1[0][0]
+        db = database_worker("Logging_info.db")
+        query1 = f"SELECT Dates FROM Data_log WHERE Exercise = 'Squat'AND user_id = '{user_id}'"
+        data1 = db.search(query1)
+        db.close()
+        Squat_days = [datetime.strptime(row[0], '%m/%d/%Y').strftime('%e').lstrip() for row in data1]
+        print(Squat_days)
+        for d in Squat_days:
+            self.ids[f"{d}_day"].md_bg_color = (1, 0, 1, 0.5)
+ ```
+ **Fig-12(A)**
+ ```.kv
+ <Calender>:
+    FitImage:
+        source:"gym_background.jpg"
+    MDCard:
+        size_hint: .9, .9
+        pos_hint: {"center_x":.5, "center_y":.5}
+        orientation: "vertical"
+    MDLabel:
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Calendar"
+        halign: "center"
+        pos_hint: {"center_x":.5, "center_y":.95}
+        background_color: (1, 1, 1, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+    MDRaisedButton:
+        id: Go_back
+        text: "Back"
+        icon: "account-arrow-left"
+        md_bg_color: "#d50000"
+        on_press: root.parent.current = "HomeScreen"
+        size_hint: .1, .05
+        pos_hint: {"center_x":.93, "center_y":.95}
+    MDFloatLayout:
+        MDGridLayout:
+            size_hint: .7, .7
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            cols: 7
+            rows: 7
+
+            # Add a label to each cell of the grid layout
+            MDLabel:
+                bold: True
+                text: "Mon"
+                halign: 'center'
+            MDLabel:
+                bold: True
+                text: "Tue"
+                halign: 'center'
+            MDLabel:
+                bold: True
+                text: "Web"
+                halign: 'center'
+            MDLabel:
+                bold: True
+                text: "Thu"
+                halign: 'center'
+            MDLabel:
+                bold: True
+                text: "Fri"
+                halign: 'center'
+            MDLabel:
+                bold: True
+                text: "Sat"
+                halign: 'center'
+            MDLabel:
+                bold: True
+                text: "Sun"
+                halign: 'center'
+            MDLabel
+                text:''
+            MDLabel
+                text:''
+            MDLabel:
+                id: 1_day
+                text: '1'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+ ```
+ 
+ **Fig-12(B)**
+ 
+**Fig-12**: The code abvoe in Fig-12(A) defines a Calender class that inherits from MDScreen.  The on_pre_enter function is called when the screen is navigated to. It retrieves the user_id from the LoginScreen and queries the Logging_info.db database to retrieve all dates that the user has logged the "Squat" exercise. It then extracts the day of each date and stores them in a list called Squat_days. Finally, the function changes the background color of the MDLabel widgets representing the days in the calendar that the user logged the "Squat" exercise using the md_bg_color attribute of the widget. The code is repeated for all other exerceise in the database. This is why kivy is such an amazing library for such product due to its versitility in tools and methods that can be used(As seen in the kivy code in Fig-12(B).It shows how the kivy is structured with days of the week and number of the day. It repeats for every day in the week). It allowed me to create exactly what the client wanted with zero compremises in a relativtly logical manner. 
+```.py
+class Statistics(MDScreen):
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+        self.exercise = None
+
+
+    def spinner_click(self, value):
+        print(value.text)
+        self.exercise = value.text
+
+    def stat_graph(self):
+        result1 = LoginScreen.result
+        user_id = result1[0][0]
+        if self.exercise == "Bench Press":
+            Benchpress = []
+            db = database_worker("Logging_info.db")
+            query4 = f"SELECT Weight FROM Data_log WHERE Exercise = 'Bench Press' AND user_id = '{user_id}'"
+            data4 = db.search(query4)
+            db.close()
+            Benchpress.append(data4)
+            flat_list = []
+            for item in Benchpress[0]:
+                value = item[0]  # extract the first (and only) element of the tuple
+                flat_list.append(value)
+
+            self.bench_list = flat_list
+            print(self.bench_list)
+
+            print(flat_list)
+            plt.ion()
+            plt.plot(flat_list)
+            plt.title('Bench Press Progression')
+            plt.xlabel('Overall Entries')
+            plt.ylabel('WEIGHT(KG)')
+            plt.show(block=True)
+        if self.exercise == "Squat":
+            Squat = []
+            db = database_worker("Logging_info.db")
+            query4 = f"SELECT Weight FROM Data_log WHERE Exercise = 'Squat'AND user_id = '{user_id}'"
+            data4 = db.search(query4)
+            db.close()
+            Squat.append(data4)
+            flat_list1 = []
+            for item in Squat[0]:
+                value = item[0]  # extract the first (and only) element of the tuple
+                flat_list1.append(value)
+            print(flat_list1)
+            plt.ion()
+            plt.plot(flat_list1)
+            plt.title('Squat Progression')
+            plt.xlabel('Overall Entries')
+            plt.ylabel('WEIGHT(KG)')
+
+            plt.show(block=True)
+```
+**Fig-13(A)**
+![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Screenshot%202023-03-09%20225236.png)
+**Fig-13(B)**
+
+**Fig-13**:The Statistics class shown above inherits from the MDScreen. First It initializes with no assigned value to the exercise variable. Then there is a spinner_click method that takes in a value argument which is equal to the option chosen in the program and assigns its text attribute to the exercise variable. This was down so that the value of the exercise variable can be inherited later.Then there is a stat_graph method that fetches data from a database based on the exercise variable value. If exercise is "Bench Press", it fetches the weight data of bench press exercises and saves it in a bench_list variable. Then, it plots the bench_list values on a matplotlib graph titled 'Bench Press Progression'. This is the particular code if exercise is equal to "Squat", it fetches the weight data of squat exercises and saves it in a flat_list1 variable. This is done for every exercise in the database similary to the method used in(Fig-12) Then, it plots the flat_list1 values on a matplotlib graph titled 'Squat Progression'(Seen above in Fig-13(B)). Both graphs have Overall Entries on the x-axis and WEIGHT(KG)' on the y-axis. The plt.show(block=True) line at the end of each conditional statement ensures that the graph stays open and visible until the user closes it.
+
  # Criteria D:
  ## Citation
  ![curls-gym](https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif)
