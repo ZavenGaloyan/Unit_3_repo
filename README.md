@@ -75,6 +75,14 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
 | 21 | Statistics page written stats                             | To create written statistics based off of the user inputs on their gym progress                                                                         | Development       | 2 hours            | march 6,        | C        |
 | 22 | Statistics page visaul stats                              | Providing a visul representaion of the users progression in working out based off of their inputs                                                       | Development       | 2 hours       
  # Criteria C: Development:
+  ## Techniques Used:
+  - Kivy
+  - Python
+  - Matplotlib
+  - Relational Databases
+  - Datetime
+  - Pbkd2f
+
  ```.py
  class database_worker:
     def __init__(self, name):
@@ -197,7 +205,7 @@ class HomeScreen(MDScreen):
             self.ids.passwd_check.error = True
             self.ids.email.error = True
  ```
- **Fig-9**:The code given above defines a class called RegistrationScreen that inherits from the MDScreen class. It provides a single method called try_register that handles user registration attempts. The try_register method first retrieves the user input for username, email, password, and password confirmation. It then checks if all required fields are filled out and if the password meets the minimum length requirement. If the input passes these checks, the method verifies that the password and password confirmation fields match. If the input passes all checks, the method constructs an SQL query to insert the user's information into a SQLite database called "db_login.db". The query is executed using the database_worker class, and the method switches the app to the LoginScreen screen so that it is easier to log in once the registration has been completed. If any of the input fields fail to pass the required checks, the method highlights the corresponding fields with an error indication.
+ **Fig-9**:The code given above defines a class called RegistrationScreen that inherits from the MDScreen class. It provides a single method called try_register that handles user registration attempts. The try_register method first retrieves the user input for username, email, password, and password confirmation. It then checks if all required fields are filled out and if the password meets the minimum length requirement. If the input passes these checks, the method verifies that the password and password confirmation fields match. If the input passes all checks, the method constructs an SQL query to insert the user's information into a SQLite database called "db_login.db". The query is executed using the database_worker class, and the method switches the app to the LoginScreen screen so that it is easier to log in once the registration has been completed. If any of the input fields fail to pass the required checks, the method highlights the corresponding fields with an error indication. As an added sequrity measure the password is hashed with Pbkd2f SHA256 to encrypt the password when entered into the database
 ```.kv
 <LoginScreen>:
     FitImage:
@@ -546,15 +554,52 @@ class Statistics(MDScreen):
 
 **Fig-13(B)**
 
-**Fig-13**:The Statistics class shown above inherits from the MDScreen. First It initializes with no assigned value to the exercise variable. Then there is a spinner_click method that takes in a value argument which is equal to the option chosen in the program and assigns its text attribute to the exercise variable. This was down so that the value of the exercise variable can be inherited later.Then there is a stat_graph method that fetches data from a database based on the exercise variable value. If exercise is "Bench Press", it fetches the weight data of bench press exercises and saves it in a bench_list variable. Then, it plots the bench_list values on a matplotlib graph titled 'Bench Press Progression'. This is the particular code if exercise is equal to "Squat", it fetches the weight data of squat exercises and saves it in a flat_list1 variable. This is done for every exercise in the database similary to the method used in(Fig-12) Then, it plots the flat_list1 values on a matplotlib graph titled 'Squat Progression'(Seen above in Fig-13(B)). Both graphs have Overall Entries on the x-axis and WEIGHT(KG)' on the y-axis. The plt.show(block=True) line at the end of each conditional statement ensures that the graph stays open and visible until the user closes it.
+**Fig-13**:The Statistics class shown above inherits from the MDScreen. First It initializes with no assigned value to the exercise variable. Then there is a spinner_click method that takes in a value argument which is equal to the option chosen in the program and assigns its text attribute to the exercise variable. This was down so that the value of the exercise variable can be inherited later.Then there is a stat_graph method that fetches data from a database based on the exercise variable value. If exercise is "Bench Press", it fetches the weight data of bench press exercises and saves it in a bench_list variable. Then, it plots the bench_list values on a matplotlib graph titled 'Bench Press Progression'. This is the particular code if exercise is equal to "Squat", it fetches the weight data of squat exercises and saves it in a flat_list1 variable. This is done for every exercise in the database similary to the method used in(Fig-12). Then, it plots the flat_list1 values on a matplotlib graph titled 'Squat Progression'(Seen above in Fig-13(B)). Both graphs have Overall Entries on the x-axis and WEIGHT(KG)' on the y-axis. The plt.show(block=True) line at the end of each conditional statement ensures that the graph stays open and visible until the user closes it.
 
  # Criteria D:
  ## Citation
  ![curls-gym](https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif)
 
- https://www.pngegg.com/it/png-zugos
- https://www.muscleandstrength.com/articles/arnold-schwarzenegger-superset-workout
- https://revolutionaryprogramdesign.com/ronnie-coleman-training-program/
- https://www.shape.com/celebrities/celebrity-workouts/i-worked-out-dwayne-rock-johnson#:~:text=The%20Rock's%20Workout%20Routine,and%20seven%20are%20rest%20days.
- https://gymtalk.com/rich-piana-8-hour-arm-workout/
- https://www.sportskeeda.com/health-and-fitness/cbum-workout-split-olympia-winner-chris-bumstead-s-training-split-explained
+ https://www.muscleandstrength.com/articles/arnold-schwarzenegger-superset-workout:
+Muscle and Strength. "Arnold Schwarzenegger Superset Workout Program." Accessed on March 9, 2023.
+
+https://revolutionaryprogramdesign.com/ronnie-coleman-training-program/:
+Revolutionary Program Design. "Ronnie Coleman Training Program." Accessed on March 9, 2023.
+
+https://www.shape.com/celebrities/celebrity-workouts/i-worked-out-dwayne-rock-johnson#:~:text=The%20Rock's%20Workout%20Routine,and%20seven%20are%20rest%20days.:
+Shape. "I Worked Out Like Dwayne 'The Rock' Johnson for 3 Weeks—Here's What Happened." Accessed on March 9, 2023.
+
+https://gymtalk.com/rich-piana-8-hour-arm-workout/:
+GymTalk. "The Rich Piana 8 Hour Arm Workout." Accessed on March 9, 2023.
+
+https://www.sportskeeda.com/health-and-fitness/cbum-workout-split-olympia-winner-chris-bumstead-s-training-split-explained:
+Sportskeeda. "CBum Workout Split: Olympia Winner Chris Bumstead's Training Split Explained." Accessed on March 9, 2023.
+
+https://chat.openai.com/chat:
+OpenAI. "OpenAI Chat." Accessed on March 9, 2023.
+
+https://stackoverflow.com/questions/37422382/python-kivy-underline-not-working-in-label:
+Stack Overflow. "Python Kivy Underline Not Working in Label." Accessed on March 9, 2023.
+
+https://stackoverflow.com/questions/48347569/kivy-limit-values-on-inputtext:
+Stack Overflow. "Kivy Limit Values on InputText." Accessed on March 9, 2023.
+
+https://stackoverflow.com/questions/44403466/kivy-how-to-add-padding-to-a-text-input:
+Stack Overflow. "Kivy: How to Add Padding to a Text Input." Accessed on March 9, 2023.
+
+https://www.geeksforgeeks.org/python-popup-widget-in-kivy/:
+GeeksforGeeks. "Python | Popup Widget in Kivy." Accessed on March 9, 2023.
+
+https://www.w3schools.com/python/python_inheritance.asp:
+w3schools. "Python Inheritance." Accessed on March 9, 2023.
+
+https://realpython.com/python-sqlite-sqlalchemy/:
+Real Python. "Python SQLite: A Thorough Guide." Accessed on March 9, 2023.
+
+https://www.programiz.com/python-programming/datetime:
+Programiz. "Python Datetime Module." Accessed on March 9, 2023.
+
+https://docs.python.org/3/library/datetime.html:
+Python Software Foundation. "datetime — Basic Date and Time Types." Accessed on March 9, 2023.
+
+![curls-gym](https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif)
