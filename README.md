@@ -1,6 +1,6 @@
-[Criteria A](#Criteria A:)
+[Criteria A](#criteria-a:)
 
-2. [Criteria B](#Criteria B:)
+2. [Criteria B](#criteria-b:)
 
 3. [Criteria C](#criteria-c:)
 
