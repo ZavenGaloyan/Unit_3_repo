@@ -27,6 +27,7 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
  # Criteria B:
  ## Flow Chart
  ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Unit_3_flow.drawio%20(2).drawio.png)
+ 
  **Fig-1**: The flow chart above depicts the process that the python program does to enter information that is inputed by the user into the database. The differance in symbols and colors are differant properties and processes that allow the program to compelete the process of entering information. It also includes validation so that the program is less likely to malfunction from the user inputs.  
  ## System Diagram
  ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/System_diagram.png)
