@@ -11,7 +11,7 @@ My client wants an application that can track their gym progress and workouts in
 
 4.The app should provide detailed statistics and visualizations of users' workout data, including progress over time, improvements in strength.
 
-5.The app should include a calendar system, allowing users to view their workout logs by date and track their progress over time.
+5.The app should include a calendar system, allowing users to view their workout logs by date during the current month so that they can plan and track their workouts.
 
 6.The app should provide a suggested or explore workout page, allowing users to discover new exercises or workouts to add to their routine.
 
