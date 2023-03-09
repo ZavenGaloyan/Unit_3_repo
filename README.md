@@ -26,7 +26,8 @@ Kivy is a Python framework for building graphical user interfaces (GUIs). Its cr
 Combining Python, SQL databases, and Kivy can provide an efficient and flexible way to build a workout tracking application with a user-friendly GUI interface. Developers can use Python to create the logic of the application, SQL databases to store and manage the workout data, and Kivy to build an interactive and user-friendly GUI. The combination of these tools provides an efficient and scalable way to build a modern-looking application that can help clients achieve their fitness goals by tracking and analyzing their workout progress. Additionally, these tools have a large community and support, providing developers with a wide range of resources and documentation to help them build and maintain the application.
  # Criteria B:
  ## Flow Chart
- ![Fig-1](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Unit_3_flow.drawio%20(2).drawio.png)
+ ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Unit_3_flow.drawio%20(2).drawio.png)
+ **Fig-1**: The flow chart above depicts the process that the python program does to enter information that is inputed by the user into the database. The differance in symbols and colors are differant properties and processes that allow the program to compelete the process of entering information. It also includes validation so that the program is less likely to malfunction from the user inputs.  
  ## System Diagram
  ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/System_diagram.png)
  ## WireFrame Diagram
