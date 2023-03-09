@@ -29,7 +29,6 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
  <p align="center">
   <img src="https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Unit_3_flow.drawio%20(2).drawio.png" alt="Example image">
 </p>
- ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/Unit_3_flow.drawio%20(2).drawio.png)
  
  **Fig-1**: The flow chart above depicts the process that the python program does to enter information that is inputed by the user into the database. The differance in symbols and colors are differant properties and processes that allow the program to compelete the process of entering information. It also includes validation so that the program is less likely to malfunction from the user inputs.  
  ## System Diagram
@@ -41,7 +40,9 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
  
   **Fig-3**: The Wireframe diagram shown above is a visual representation of the layout and design of a user interface. It is a skeletal framework that shows the basic structure of the application without including specific design elements such as colors, fonts, or images. It only shows the user inputs and which screens they lead to with black arrows seen above. If the user where to click on a given button it would correspond to the screen that the arrow is pointing to.  
  ## UML Diagram
- ![](https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/UML.drawio.png)
+  <p align="center">
+  <img src="https://github.com/ZavenGaloyan/Unit_3_repo/blob/main/UML.drawio.png" alt="Example image">
+</p>
  
   **Fig-4**: The UML (Unified Modeling Language) diagram shown above is a visual representation of the system used in the program by using standardized symbols and notation. The diagram above is a Class diagram to be specific, which is a diagram that shows the structure of a system by defining its classes, attributes, methods, and relationships. it also shows how these classes are connected with the black arrows seen above. 
   ## ER Diagram
