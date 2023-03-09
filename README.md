@@ -1,3 +1,13 @@
+[Criteria A](#criteria-a:)
+
+2. [Criteria B](#criteria-b:)
+
+3. [Criteria C](#criteria-c:)
+
+4. [Criteria D](#criteria-d:)
+
+5. [Citation](#citation)
+
 # Unit 3 Project: Gym logging application
  # Criteria A:
  ## Problem definition
@@ -59,10 +69,12 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
 | 20 | Validation regarding user inputs                          | To make sure that he app doesn't encounter an error if it were to crash                                                                                 | Development       | 3 hours            | march 5,        | C        |
 | 21 | Statistics page written stats                             | To create written statistics based off of the user inputs on their gym progress                                                                         | Development       | 2 hours            | march 6,        | C        |
 | 22 | Statistics page visaul stats                              | Providing a visul representaion of the users progression in working out based off of their inputs                                                       | Development       | 2 hours       
+ # Criteria C:
  
-![curls-gym](https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif)
+ # Criteria D:
+ ## Citation
+ ![curls-gym](https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif)
 
- ## SOURCE
  https://www.pngegg.com/it/png-zugos
  https://www.muscleandstrength.com/articles/arnold-schwarzenegger-superset-workout
  https://revolutionaryprogramdesign.com/ronnie-coleman-training-program/
