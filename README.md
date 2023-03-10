@@ -557,6 +557,7 @@ class Statistics(MDScreen):
 **Fig-13**:The Statistics class shown above inherits from the MDScreen. First It initializes with no assigned value to the exercise variable. Then there is a spinner_click method that takes in a value argument which is equal to the option chosen in the program and assigns its text attribute to the exercise variable. This was down so that the value of the exercise variable can be inherited later.Then there is a stat_graph method that fetches data from a database based on the exercise variable value. If exercise is "Bench Press", it fetches the weight data of bench press exercises and saves it in a bench_list variable. Then, it plots the bench_list values on a matplotlib graph titled 'Bench Press Progression'. This is the particular code if exercise is equal to "Squat", it fetches the weight data of squat exercises and saves it in a flat_list1 variable. This is done for every exercise in the database similary to the method used in(Fig-12). Then, it plots the flat_list1 values on a matplotlib graph titled 'Squat Progression'(Seen above in Fig-13(B)). Both graphs have Overall Entries on the x-axis and WEIGHT(KG)' on the y-axis. The plt.show(block=True) line at the end of each conditional statement ensures that the graph stays open and visible until the user closes it.
 
  # Criteria D:
+ 
  ## Citation
 
  https://www.muscleandstrength.com/articles/arnold-schwarzenegger-superset-workout:
