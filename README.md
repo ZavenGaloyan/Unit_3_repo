@@ -603,7 +603,7 @@ Programiz. https://www.programiz.com/python-programming/datetime. "Python Dateti
 Python Software Foundation. https://docs.python.org/3/library/datetime.html. "datetime — Basic Date and Time Types." Accessed on March 4, 2023.
 
  ## Apendix
- ###Client Meeting notes
+ ### Client Meeting notes
 - Meeting 1: Understand the needs of my client and what they would like in the application
 - Response 1: They wanted a application to log their gym progress and improvements overtime
 - Meeting 2: Discuss the first set of success criteria
