@@ -601,6 +601,22 @@ Real Python. https://realpython.com/python-sqlite-sqlalchemy/. "Python SQLite: A
 Programiz. https://www.programiz.com/python-programming/datetime. "Python Datetime Module." Accessed on March 4, 2023.
 
 Python Software Foundation. https://docs.python.org/3/library/datetime.html. "datetime — Basic Date and Time Types." Accessed on March 4, 2023.
+ ## Apendix
+ ###Client Meeting notes
+- Meeting 1: Understand the needs of my client and what they would like in the application
+- Response 1: They wanted a application to log their gym progress and improvements overtime
+- Meeting 2: Discuss the first set of success criteria
+- Response 2: Add a statistics page and explore page to the success criteria.
+- Meeting 3: Dicuss updated criteria and get approval
+- Response 3: Criteria was approved by the cilent 
+- Meeting 4: Minimum viable product review(Showing logging in, registration, and logging info screens. Along with several diagrams)
+- Response 4: They didn't like the way several diagrams such as the flowchart and wireframe diagram were made. They also suggested Creating indivdualised accounts as that point in time every user could see every entry
+- Meeting 5: Final approval of project. 
+- Project was approved and wiretransfer has been made (¥1)
+
+
+
+
 
 
  <p align="center">
