@@ -601,6 +601,7 @@ Real Python. https://realpython.com/python-sqlite-sqlalchemy/. "Python SQLite: A
 Programiz. https://www.programiz.com/python-programming/datetime. "Python Datetime Module." Accessed on March 4, 2023.
 
 Python Software Foundation. https://docs.python.org/3/library/datetime.html. "datetime — Basic Date and Time Types." Accessed on March 4, 2023.
+
  ## Apendix
  ###Client Meeting notes
 - Meeting 1: Understand the needs of my client and what they would like in the application
@@ -614,10 +615,1528 @@ Python Software Foundation. https://docs.python.org/3/library/datetime.html. "da
 - Meeting 5: Final approval of project. 
 - Project was approved and wiretransfer has been made (¥1)
 
+ ## Final Python Code
+ ```.py
+ 
+import sqlite3
+
+from Seqcure_password import encrypt_password, check_password
+from kivymd.app import MDApp
+from kivymd.uix.screen import MDScreen
+from kivymd.uix.datatables import MDDataTable
+import matplotlib.pyplot as plt
+from datetime import datetime
+
+class database_worker:
+    def __init__(self, name):
+        self.connection = sqlite3.connect(name)
+        self.cursor = self.connection.cursor()
+
+    def search(self, query):
+        result = self.cursor.execute(query).fetchall()
+        return result
+
+    def run_save(self, query):
+        self.cursor.execute(query)
+        self.connection.commit()
+
+    def close(self):
+        self.connection.close()
+
+
+class HomeScreen(MDScreen):
+    def open_info(self):
+        self.parent.current = "ViewInfo"
+
+    def open_Statistics(self):
+        self.parent.current = "Statistics"
+
+    def open_Calender(self):
+        self.parent.current = "Calender"
+    def open_Explore(self):
+        self.parent.current = "Explore"
+
+
+class LoginScreen(MDScreen):
+
+    result = None
+    def try_login(self):
+        print("User tried to login")
+        # Get the input username and password and print it
+        uname = self.ids.uname.text
+        passwd = self.ids.passwd.text
+        hash_test = encrypt_password(passwd)
+        if uname != "" and passwd != "":
+            query = f"SELECT * from users WHERE username='{uname}' and password='{passwd}'"
+            db = database_worker("db_login.db")
+            result = db.search(query=query)
+            print(result)
+            LoginScreen.result = result
+            db.close()
+            if len(result)==1:
+                print("Login successful")
+                self.parent.current = "HomeScreen"
+                self.ids.uname.text = ""
+                self.ids.passwd.text = ""
+            else:
+                self.ids.welcome.text = "Login incorrect"
+        else:
+            self.ids.welcome.text = "Fill in all required text boxes"
+
+    def Clear(self):
+        self.ids.uname.text = ""
+        self.ids.passwd.text = ""
+
+class RegistrationScreen(MDScreen):
+    def try_register(self):
+        uname = self.ids.uname.text
+        email = self.ids.email.text
+        passwd = self.ids.passwd.text
+        passwd_check = self.ids.passwd_check.text
+        hash = encrypt_password(passwd)
+        if uname != "" and passwd != "" and email != "" and passwd != "" and passwd_check != "":
+            if len(passwd) > 5:
+                if passwd != passwd_check:
+                    self.ids.passwd_check.error = True
+                else:
+                    db = database_worker("db_login.db")
+                    query = f"INSERT into users (email, password, username, HASH) values('{email}', '{passwd}','{uname}','{hash}')"
+                    db.run_save(query)
+                    db.close()
+                    print("Registration completed")
+                    self.parent.current = "LoginScreen"
+                    self.ids.uname.text = ""
+                    self.ids.email.text = ""
+                    self.ids.passwd.text = ""
+                    self.ids.passwd_check.text = ""
+            else:
+                self.ids.passwd.error = True
+        else:
+            self.ids.uname.error = True
+            self.ids.passwd.error = True
+            self.ids.passwd_check.error = True
+            self.ids.email.error = True
+
+
+class ViewInfo(MDScreen):
+
+    #LoginScreen().try_login()
+
+
+
+    data_table = None
+    def update(self):
+        result1 = LoginScreen.result
+        user_id = result1[0][0]
+        print(user_id)
+        db = database_worker("Logging_info.db")
+        query = f"SELECT * FROM Data_log WHERE user_id = '{user_id}'"
+        data = db.search(query)
+        db.close()
+        self.data_table.update_row_data(None, data)
+
+    def on_pre_enter(self, *args):
+        self.data_table = MDDataTable(
+            size_hint=(.7, .7),
+            pos_hint={"center_x": .5, "center_y": .55},
+            use_pagination=True,
+            check=True,
+            column_data=[("PersonID", 30), ("Exercise", 20), ("Weight", 20), ("Reps", 20), ("Date", 20), ("User_id",20)]
+        )
+
+        self.data_table.bind(on_row_press=self.row_pressed)
+        self.data_table.bind(on_check_press=self.check_pressed)
+        self.add_widget(self.data_table)
+        self.update()
+
+    def row_pressed(self, table, row):
+        print("a row was checked ", row.text)
+        row.md_bg_color = '#FFFFFFF'
+
+    def check_pressed(self, table, row):
+        print("a row was pressed ", row)
+
+    def delete(self):
+        rows_checked = self.data_table.get_row_checks()
+        print(rows_checked)
+        db = database_worker("Logging_info.db")
+        for r in rows_checked:
+            id = r[0]
+            query = f"delete from Data_log where PersonID={id}"
+            db.run_save(query)
+        db.close()
+
+class AddInfo(MDScreen):
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+        self.exercise = None
+
+    def spinner_clicked(self, value):
+        print(value.text)
+        self.exercise = value.text
+
+
+    def Enter_Info(self):
+        result1 = LoginScreen.result
+        user_id = result1[0][0]
+        date = self.ids.date.text
+        reps = self.ids.reps.text
+        weight = self.ids.weight.text
+        if weight == "" and reps == "":
+            self.ids.weight.error = True
+            self.ids.reps.error = True
+        if 8 <= len(date) <= 10:
+            try:
+                if datetime.strptime(date, '%m/%d/%Y'):
+                    print('Valid date!')
+                    if date != "" and reps != "" and weight != "":
+                        db = database_worker("Logging_Info.db")
+                        query = f"INSERT into Data_log (Exercise, Weight, Reps, Dates, user_id) values('{self.exercise}', '{weight}','{reps}','{date}', '{user_id}')"
+                        db.run_save(query)
+                        db.close()
+                        print("Entry Succesfull")
+                        self.parent.current = "ViewInfo"
+                    else:
+                        self.ids.weight.error = True
+                        self.ids.reps.error = True
+                        self.ids.date.error = True
+            except ValueError:
+                self.ids.date.error = True
+        else:
+            self.ids.date.error = True
 
 
 
 
+
+
+class Calender(MDScreen):
+
+    def on_pre_enter(self):
+        result1 = LoginScreen.result
+        user_id = result1[0][0]
+        db = database_worker("Logging_info.db")
+        query1 = f"SELECT Dates FROM Data_log WHERE Exercise = 'Squat'AND user_id = '{user_id}'"
+        data1 = db.search(query1)
+        db.close()
+        Squat_days = [datetime.strptime(row[0], '%m/%d/%Y').strftime('%e').lstrip() for row in data1]
+        print(Squat_days)
+        for d in Squat_days:
+            self.ids[f"{d}_day"].md_bg_color = (1, 0, 1, 0.5)
+
+        db = database_worker("Logging_info.db")
+        query2 = f"SELECT Dates FROM Data_log WHERE Exercise = 'Shoulder Press'AND user_id = '{user_id}'"
+        data2 = db.search(query2)
+        db.close()
+        Shoudler_press_days = [datetime.strptime(row[0], '%m/%d/%Y').strftime('%e').lstrip() for row in data2]
+        print(Shoudler_press_days)
+        for d in Shoudler_press_days:
+            self.ids[f"{d}_day"].md_bg_color = (1, 0, 0, 0.5)
+
+        db = database_worker("Logging_info.db")
+        query3 = f"SELECT Dates FROM Data_log WHERE Exercise = 'Deadlift'AND user_id = '{user_id}'"
+        data3 = db.search(query3)
+        db.close()
+        Deadlift_days = [datetime.strptime(row[0], '%m/%d/%Y').strftime('%e').lstrip() for row in data3]
+        print(Deadlift_days)
+        for d in Deadlift_days:
+            self.ids[f"{d}_day"].md_bg_color = (1, 1, 0, 0.5)
+
+        db = database_worker("Logging_info.db")
+        query4 = f"SELECT Dates FROM Data_log WHERE Exercise = 'Bench Press'AND user_id = '{user_id}'"
+        data4 = db.search(query4)
+        db.close()
+        BenchPress_days = [datetime.strptime(row[0], '%m/%d/%Y').strftime('%e').lstrip() for row in data4]
+        print(BenchPress_days)
+        for d in BenchPress_days:
+            self.ids[f"{d}_day"].md_bg_color = (0, 0, 1, 0.5)
+
+class Statistics(MDScreen):
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+        self.exercise = None
+
+
+    def spinner_click(self, value):
+        print(value.text)
+        self.exercise = value.text
+
+    def stat_graph(self):
+        result1 = LoginScreen.result
+        user_id = result1[0][0]
+        if self.exercise == "Bench Press":
+            Benchpress = []
+            db = database_worker("Logging_info.db")
+            query4 = f"SELECT Weight FROM Data_log WHERE Exercise = 'Bench Press' AND user_id = '{user_id}'"
+            data4 = db.search(query4)
+            db.close()
+            Benchpress.append(data4)
+            flat_list = []
+            for item in Benchpress[0]:
+                value = item[0]  # extract the first (and only) element of the tuple
+                flat_list.append(value)
+
+            self.bench_list = flat_list
+            print(self.bench_list)
+
+            print(flat_list)
+            plt.ion()
+            plt.plot(flat_list)
+            plt.title('Bench Press Progression')
+            plt.xlabel('Overall Entries')
+            plt.ylabel('WEIGHT(KG)')
+            plt.show(block=True)
+        if self.exercise == "Squat":
+            Squat = []
+            db = database_worker("Logging_info.db")
+            query4 = f"SELECT Weight FROM Data_log WHERE Exercise = 'Squat'AND user_id = '{user_id}'"
+            data4 = db.search(query4)
+            db.close()
+            Squat.append(data4)
+            flat_list1 = []
+            for item in Squat[0]:
+                value = item[0]  # extract the first (and only) element of the tuple
+                flat_list1.append(value)
+            print(flat_list1)
+            plt.ion()
+            plt.plot(flat_list1)
+            plt.title('Squat Progression')
+            plt.xlabel('Overall Entries')
+            plt.ylabel('WEIGHT(KG)')
+
+            plt.show(block=True)
+
+        if self.exercise == "Shoulder Press":
+            Shoulder_press = []
+            db = database_worker("Logging_info.db")
+            query4 = f"SELECT Weight FROM Data_log WHERE Exercise = 'Shoulder Press'AND user_id = '{user_id}'"
+            data4 = db.search(query4)
+            db.close()
+            Shoulder_press.append(data4)
+            flat_list2 = []
+            for item in Shoulder_press[0]:
+                value = item[0]  # extract the first (and only) element of the tuple
+                flat_list2.append(value)
+            print(flat_list2)
+            plt.ion()
+            plt.plot(flat_list2)
+
+            plt.title('Shoulder Press Progression')
+            plt.xlabel('Overall Entries')
+            plt.ylabel('WEIGHT(KG)')
+
+            plt.show(block=True)
+
+        if self.exercise == "Deadlift":
+            Deadlift = []
+            db = database_worker("Logging_info.db")
+            query4 = f"SELECT Weight FROM Data_log WHERE Exercise = 'Deadlift'AND user_id = '{user_id}'"
+            data4 = db.search(query4)
+            db.close()
+            Deadlift.append(data4)
+            flat_list3 = []
+            for item in Deadlift[0]:
+                value = item[0]  # extract the first (and only) element of the tuple
+                flat_list3.append(value)
+            print(flat_list3)
+            plt.ion()
+            plt.plot(flat_list3)
+
+            plt.title('Deadlift Progression')
+            plt.xlabel('Overall Entries')
+            plt.ylabel('WEIGHT(KG)')
+
+            plt.show(block=True)
+
+    def on_pre_enter(self, *args):
+        result1 = LoginScreen.result
+        user_id = result1[0][0]
+        Benchpress = []
+        db = database_worker("Logging_info.db")
+        query4 = f"SELECT Weight FROM Data_log WHERE Exercise = 'Bench Press'AND user_id = '{user_id}'"
+        data4 = db.search(query4)
+        db.close()
+        Benchpress.append(data4)
+        flat_list = []
+        for item in Benchpress[0]:
+            value = item[0]  # extract the first (and only) element of the tuple
+            flat_list.append(value)
+
+        first_entry = flat_list[0]
+        last_entry = flat_list[-1]
+        Weight_dif = last_entry - first_entry
+        percentage = ((last_entry - first_entry) / last_entry) * 100
+        self.ids.Benchi.text = f"""Percentage change is {round(percentage)}%. 
+        Weight change is {Weight_dif}"""
+
+        Deadlift = []
+        db = database_worker("Logging_info.db")
+        query4 = f"SELECT Weight FROM Data_log WHERE Exercise = 'Deadlift'AND user_id = '{user_id}'"
+        data4 = db.search(query4)
+        db.close()
+        Deadlift.append(data4)
+        flat_list3 = []
+        for item in Deadlift[0]:
+            value = item[0]  # extract the first (and only) element of the tuple
+            flat_list3.append(value)
+        print(flat_list3)
+
+        first_entry = flat_list3[0]
+        last_entry = flat_list3[-1]
+        Weight_dif = last_entry - first_entry
+        percentage = ((last_entry - first_entry) / last_entry) * 100
+        self.ids.deadlifti.text = f"""Percentage change is {round(percentage)}%. 
+        Weight change is {Weight_dif}"""
+
+        Shoulder_press = []
+        db = database_worker("Logging_info.db")
+        query4 = f"SELECT Weight FROM Data_log WHERE Exercise = 'Shoulder Press'AND user_id = '{user_id}'"
+        data4 = db.search(query4)
+        db.close()
+        Shoulder_press.append(data4)
+        flat_list2 = []
+        for item in Shoulder_press[0]:
+            value = item[0]  # extract the first (and only) element of the tuple
+            flat_list2.append(value)
+        print(flat_list2)
+
+        first_entry = flat_list2[0]
+        last_entry = flat_list2[-1]
+        Weight_dif = last_entry - first_entry
+        percentage = ((last_entry - first_entry) / last_entry) * 100
+        self.ids.Shoulderi.text = f"""Percentage change is {round(percentage)}%. 
+        Weight change is {Weight_dif}"""
+
+        Squat = []
+        db = database_worker("Logging_info.db")
+        query4 = f"SELECT Weight FROM Data_log WHERE Exercise = 'Squat'AND user_id = '{user_id}'"
+        data4 = db.search(query4)
+        db.close()
+        Squat.append(data4)
+        flat_list1 = []
+        for item in Squat[0]:
+            value = item[0]  # extract the first (and only) element of the tuple
+            flat_list1.append(value)
+        print(flat_list1)
+
+        first_entry = flat_list1[0]
+        last_entry = flat_list1[-1]
+        Weight_dif = last_entry - first_entry
+        percentage = ((last_entry - first_entry) / last_entry) * 100
+        self.ids.squati.text = f"""Percentage change is {round(percentage)}%. 
+        Weight change is {Weight_dif}"""
+
+class Explore(MDScreen):
+    pass
+class Project_3(MDApp):
+    def build(self):
+        return
+
+#create an object
+
+# pyinstaller --add-data 'db_login.db:.' --add-data ' Logging_Info.db' --add-data 'Project_3.kv' Project_3.py
+
+test = Project_3()
+test.run()
+ ```
+## Final Kivy Code
+ ```.kv
+ #:import Factory kivy.factory.Factory
+ScreenManager:
+    LoginScreen:
+        name: "LoginScreen"
+
+    RegistrationScreen:
+        name: "RegistrationScreen"
+
+    HomeScreen:
+        name: "HomeScreen"
+
+    ViewInfo:
+        name: "ViewInfo"
+    AddInfo:
+        name: "AddInfo"
+
+    Calender:
+        name: "Calender"
+
+    Statistics:
+        name: "Statistics"
+
+    Explore:
+        name: "Explore"
+
+<LoginScreen>:
+    FitImage:
+        source:"gym_background.jpg"
+    MDCard:
+        size_hint: .6, .8
+        pos_hint: {"center_x":.5, "center_y":.5}
+        orientation: "vertical"
+
+        MDLabel:
+            size_hint: 1,.2
+            font_style: "H2"
+            text: "Login"
+            halign: "center"
+            spacing: 0
+        MDLabel:
+            id: welcome
+            size_hint: 1,.1
+            font_style: "H2"
+            text: "Welcome to your Personalised Gym ledger"
+            font_size: "20sp"
+            halign: "center"
+            spacing: 0
+
+        MDTextField:
+            id: uname
+            hint_text: "Enter Username or Email"
+            icon_right: "account"
+            size_hint: .8, .1
+            pos_hint: {"center_x":.5}
+
+        MDTextField:
+            id:passwd
+            hint_text: "Enter password"
+            icon_right: "eye-off"
+            password: True
+            size_hint: .8, .1
+            pos_hint: {"center_x":.5}
+
+        MDBoxLayout:
+            size_hint: 1,.1
+
+            MDRaisedButton:
+                id: login
+                text: "Login"
+                md_bg_color: "##d50000"
+                on_press: root.try_login()
+                size_hint: .5, .8
+            MDRaisedButton:
+                text: "Clear"
+                md_bg_color: "#ed8000"
+                on_press: root.Clear()
+                size_hint: .2, .3
+                pos_hint: {"center_y":.99}
+
+            MDRaisedButton:
+                text: "Register"
+                md_bg_color: "#d50000"
+                on_press: root.parent.current = "RegistrationScreen"
+                size_hint: .5, .8
+
+
+
+<RegistrationScreen>:
+    FitImage:
+        source:"gym_background.jpg"
+    MDCard:
+        size_hint: .6, .8
+        pos_hint: {"center_x":.5, "center_y":.5}
+        orientation: "vertical"
+
+        MDRaisedButton:
+            id: Go_back
+            text: "Back"
+            icon_left: "arrow-left-circle-outline"
+            md_bg_color: "#d50000"
+            on_press: root.parent.current = "LoginScreen"
+            size_hint: .2, .05
+            pos_hint: {"center_x":.1, "center_y":1}
+
+        MDLabel:
+            size_hint: 1,.1
+            font_style: "H4"
+            text: "Register"
+            halign: "center"
+
+        MDTextField:
+            id: uname
+            hint_text: "Enter Username "
+            icon_right: "account"
+            size_hint: .8, .1
+            pos_hint: {"center_x":.5}
+            helper_text_mode: "on_error"
+            helper_text: "Fill in all required boxes(MUST BE MORE THAN 5 CHARACTERS)"
+
+
+        MDTextField:
+            id: email
+            hint_text: "Enter email"
+            icon_right: "email"
+            size_hint: .8, .1
+            pos_hint: {"center_x":.5}
+            helper_text_mode: "on_error"
+            helper_text: "Email must contain @"
+
+        MDTextField:
+            id:passwd
+            hint_text: "Enter password"
+            icon_right: "eye-off"
+            password: True
+            size_hint: .8, .1
+            pos_hint: {"center_x":.5}
+            helper_text_mode: "on_error"
+            helper_text: "Fill in all required boxes(MUST BE MORE THAN 5 CHARACTERS)"
+
+
+        MDTextField:
+            id:passwd_check
+            hint_text: "Re-enter password"
+            icon_right: "eye-off"
+            password: True
+            size_hint: .8, .1
+            pos_hint: {"center_x":.5}
+            helper_text_mode: "on_error"
+            helper_text: "Password DOES not Match"
+
+
+
+        MDBoxLayout:
+            size_hint: 1,.1
+
+            MDRaisedButton:
+                text: "Register"
+                md_bg_color: "#d50000"
+                on_press: root.try_register()
+                size_hint: 1, 1
+<HomeScreen>:
+    FitImage:
+        source:"gym_background.jpg"
+
+    MDCard:
+        size_hint: .9, .9
+        pos_hint: {"center_x":.5, "center_y":.5}
+        orientation: "vertical"
+    Image:
+        source: "Arnold2.0.png"
+        pos_hint: {"center_x":.5, "center_y":.45}
+        size_hint: .8, .8
+
+    MDLabel:
+        size_hint: 1,.1
+        font_style: "H2"
+        font_size: '60sp'
+        text: "Menu"
+        halign: "center"
+        pos_hint: {"center_x":.5, "center_y":.9}
+
+    MDRaisedButton:
+        id: Viewinfo_page
+        text: "View Info"
+        md_bg_color: "#d50000"
+        on_press: root.open_info()
+        size_hint: .3, .3
+        pos_hint: {"center_x":.2, "center_y":.7}
+        font_size: '40sp'
+
+
+    MDRaisedButton:
+        id: Statistics_page
+        text: "Statistics"
+        md_bg_color: "#d50000"
+        on_press: root.open_Statistics()
+        size_hint: .3, .3
+        pos_hint: {"center_x":.8, "center_y":.2}
+        font_size: '40sp'
+
+    MDRaisedButton:
+        id: Calender_page
+        text: "Calendar"
+        md_bg_color: "#d50000"
+        on_press: root.open_Calender()
+        size_hint: .3, .3
+        pos_hint: {"center_x":.2, "center_y":.2}
+        font_size: '40sp'
+
+    MDRaisedButton:
+        id: Explore_page
+        text: "Explore"
+        md_bg_color: "#d50000"
+        on_press: root.open_Explore()
+        size_hint: .3, .3
+        pos_hint: {"center_x":.8, "center_y":.7}
+        font_size: '40sp'
+
+    MDRaisedButton:
+        id: Log_out
+        text: "Log Out"
+        icon: "account-arrow-left"
+        md_bg_color: "#d50000"
+        on_press: root.parent.current = "LoginScreen"
+        size_hint: .1, .05
+        pos_hint: {"center_x":.93, "center_y":.95}
+
+
+<ViewInfo>:
+    FitImage:
+        source:"gym_background.jpg"
+    MDCard:
+        size_hint: .9, .9
+        pos_hint: {"center_x":.5, "center_y":.5}
+        orientation: "vertical"
+
+
+    MDLabel:
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Info"
+        halign: "center"
+        pos_hint: {"center_x":.5, "center_y":.95}
+        background_color: (1, 1, 1, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+
+    MDRaisedButton:
+        id: Go_back
+        text: "Back"
+        icon: "account-arrow-left"
+        md_bg_color: "#d50000"
+        on_press: root.parent.current = "HomeScreen"
+        size_hint: .1, .05
+        pos_hint: {"center_x":.93, "center_y":.95}
+
+    MDRaisedButton:
+        id: Add_info
+        text: "ADD"
+        md_bg_color: "#d50000"
+        size_hint: .2, .1
+        pos_hint: {"center_x":.25, "center_y":.125}
+        on_press: root.parent.current = "AddInfo"
+
+
+    MDRaisedButton:
+        id: delete_info
+        text: "delete"
+        md_bg_color: "#d50000"
+        on_press: root.delete()
+        size_hint: .2, .1
+        pos_hint: {"center_x":.75, "center_y":.125}
+
+
+<AddInfo>:
+    FitImage:
+        source:"gym_background.jpg"
+    MDCard:
+        size_hint: .9, .9
+        pos_hint: {"center_x":.5, "center_y":.5}
+        orientation: "vertical"
+
+
+    MDLabel:
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Adding Info"
+        halign: "center"
+        pos_hint: {"center_x":.5, "center_y":.95}
+        background_color: (1, 1, 1, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+
+    MDRaisedButton:
+        id: Go_back
+        text: "Back"
+        icon: "account-arrow-left"
+        md_bg_color: "#d50000"
+        on_press: root.parent.current = "HomeScreen"
+        size_hint: .1, .05
+        pos_hint: {"center_x":.93, "center_y":.95}
+
+    Spinner:
+        id: exersise_id
+        text: "Exersise"
+        values: ["Squat", "Bench Press", "Shoulder Press", "Deadlift"]
+        on_text: root.spinner_clicked(exersise_id)
+        size_hint: .8, .1
+        pos_hint: {"center_x":.5, "center_y":.70}
+
+    MDTextField:
+        id: weight
+        hint_text: "Weight (KG)"
+        size_hint: .8, .1
+        pos_hint: {"center_x":.5, "center_y":.55}
+        input_filter: "int"
+        helper_text_mode: "on_error"
+        helper_text: "Enter positive integer"
+
+    MDTextField:
+        id: reps
+        hint_text: "reps"
+        size_hint: .8, .1
+        pos_hint: {"center_x":.5, "center_y":.4}
+        input_filter: "int"
+        helper_text_mode: "on_error"
+        helper_text: "Enter positive integer"
+
+    MDTextField:
+        id: date
+        hint_text: "date"
+        size_hint: .8, .1
+        pos_hint: {"center_x":.5, "center_y":.3}
+        helper_text_mode: "on_error"
+        helper_text: "Enter Correct format mm/dd/yyyy"
+
+
+    MDRaisedButton:
+        id: Enter_info
+        text: "Enter into Database"
+        md_bg_color: "#d50000"
+        on_press: root.Enter_Info()
+        size_hint: .1, .05
+        pos_hint: {"center_x":.5, "center_y":.15}
+
+
+
+<Calender>:
+    FitImage:
+        source:"gym_background.jpg"
+    MDCard:
+        size_hint: .9, .9
+        pos_hint: {"center_x":.5, "center_y":.5}
+        orientation: "vertical"
+    MDLabel:
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Calendar"
+        halign: "center"
+        pos_hint: {"center_x":.5, "center_y":.95}
+        background_color: (1, 1, 1, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+    MDRaisedButton:
+        id: Go_back
+        text: "Back"
+        icon: "account-arrow-left"
+        md_bg_color: "#d50000"
+        on_press: root.parent.current = "HomeScreen"
+        size_hint: .1, .05
+        pos_hint: {"center_x":.93, "center_y":.95}
+    MDFloatLayout:
+        MDGridLayout:
+            size_hint: .7, .7
+            pos_hint: {'center_x': .5, 'center_y': .5}
+            cols: 7
+            rows: 7
+
+            # Add a label to each cell of the grid layout
+            MDLabel:
+                bold: True
+                text: "Mon"
+                halign: 'center'
+            MDLabel:
+                bold: True
+                text: "Tue"
+                halign: 'center'
+            MDLabel:
+                bold: True
+                text: "Web"
+                halign: 'center'
+            MDLabel:
+                bold: True
+                text: "Thu"
+                halign: 'center'
+            MDLabel:
+                bold: True
+                text: "Fri"
+                halign: 'center'
+            MDLabel:
+                bold: True
+                text: "Sat"
+                halign: 'center'
+            MDLabel:
+                bold: True
+                text: "Sun"
+                halign: 'center'
+            MDLabel
+                text:''
+            MDLabel
+                text:''
+            MDLabel:
+                id: 1_day
+                text: '1'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 2_day
+                text:'2'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 3_day
+                text:'3'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 4_day
+                text:'4'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 5_day
+                text:'5'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 6_day
+                text:'6'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 7_day
+                text:'7'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 8_day
+                text:'8'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 9_day
+                text:'9'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 10_day
+                text:'10'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 11_day
+                text:'11'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 12_day
+                text:'12'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 13_day
+                text:'13'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 14_day
+                text:'14'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 15_day
+                text:'15'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 16_day
+                text:'16'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 17_day
+                text:'17'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 18_day
+                text:'18'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 19_day
+                text:'19'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 20_day
+                text:'20'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 21_day
+                text:'21'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 22_day
+                text:'22'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 23_day
+                text:'23'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 24_day
+                text:'24'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 25_day
+                text:'25'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 26_day
+                text:'26'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 27_day
+                text:'27'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 28_day
+                text:'28'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 29_day
+                text:'29'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 30_day
+                text:'30'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                id: 31_day
+                text:'31'
+                halign: 'center'
+                background_color: (0, 0, 0, 0)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                text:''
+            MDLabel
+                text:''
+
+            MDLabel
+                text:'CHEST'
+                bold: True
+                halign: 'center'
+                background_color: (0, 0, 1, .5)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                text:''
+            MDLabel
+                text:'LEGS'
+                bold: True
+                halign: 'center'
+                background_color: (1, 0, 1, .5)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                text:''
+            MDLabel
+                text:'BACK'
+                bold: True
+                halign: 'center'
+                background_color: (1, 1, 0, .5)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+            MDLabel
+                text:''
+            MDLabel
+                text:'SHOULDERS'
+                font_size: '13sp'
+                bold: True
+                halign: 'center'
+                background_color: (1, 0, 0, .5)
+			    canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+<Statistics>:
+    FitImage:
+        source:"gym_background.jpg"
+    MDCard:
+        size_hint: .9, .9
+        pos_hint: {"center_x":.5, "center_y":.5}
+        orientation: "vertical"
+    MDLabel:
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Statistics"
+        halign: "center"
+        pos_hint: {"center_x":.5, "center_y":.95}
+        background_color: (1, 1, 1, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+    MDRaisedButton:
+        id: Go_back
+        text: "Back"
+        icon: "account-arrow-left"
+        md_bg_color: "#d50000"
+        on_press: root.parent.current = "HomeScreen"
+        size_hint: .1, .05
+        pos_hint: {"center_x":.93, "center_y":.95}
+
+    MDLabel:
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Bench press"
+        underline: True
+        font_size: '20sp'
+        halign: "center"
+        pos_hint: {"center_x":.2, "center_y":.8}
+    MDLabel:
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Squat"
+        underline: True
+        font_size: '20sp'
+        halign: "center"
+        pos_hint: {"center_x":.43, "center_y":.8}
+    MDLabel:
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Deadlift"
+        underline: True
+        font_size: '20sp'
+        halign: "center"
+        pos_hint: {"center_x":.59, "center_y":.8}
+    MDLabel:
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Shoulder press"
+        underline: True
+        font_size: '20sp'
+        halign: "center"
+        pos_hint: {"center_x":.8, "center_y":.8}
+    MDLabel:
+        id: Benchi
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Bench press %"
+        font_size: '14sp'
+        halign: "center"
+        pos_hint: {"center_x":.19, "center_y":.75}
+    MDLabel:
+        id: squati
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Squat %"
+        font_size: '14sp'
+        halign: "center"
+        pos_hint: {"center_x":.42, "center_y":.75}
+    MDLabel:
+        id: deadlifti
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Deadlift %"
+        font_size: '14sp'
+        halign: "center"
+        pos_hint: {"center_x":.63, "center_y":.75}
+    MDLabel:
+        id: Shoulderi
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Shoulder press %"
+        font_size: '14sp'
+        halign: "center"
+        pos_hint: {"center_x":.84, "center_y":.75}
+
+
+    Spinner:
+        id: exersise_stat_id
+        text: "Exersise"
+        values: ["Squat", "Bench Press", "Shoulder Press", "Deadlift"]
+        on_text: root.spinner_click(exersise_stat_id)
+        size_hint: .3, .1
+        pos_hint: {"center_x":.5, "center_y":.6}
+
+
+    MDRaisedButton:
+        id: Enter_info
+        text: "Show graph of last month"
+        md_bg_color: "#d50000"
+        on_press: root.stat_graph()
+        size_hint: .1, .05
+        pos_hint: {"center_x":.5, "center_y":.2}
+
+
+
+
+<MyPopup1@Popup>:
+    title: 'Chris Bumsteads Shoulders and Tricep  '
+    size_hint: None, None
+    size: 600, 600
+    auto_dismiss: False
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            source: 'CBUM shoulder and tri.png'
+        Button:
+            text: 'Close me'
+            size_hint: .5, .1
+            pos_hint: {"center_x":.5, "center_y":.5}
+            on_press: root.dismiss()
+<MyPopup2@Popup>:
+    title: 'Arnold Chest and back Split'
+    size_hint: None, None
+    size: 600, 600
+    auto_dismiss: False
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            source:'Arnold chest and back.png'
+        Button:
+            text: 'Close me'
+            size_hint: .5, .1
+            pos_hint: {"center_x":.5, "center_y":.5}
+            on_press: root.dismiss()
+<MyPopup3@Popup>:
+    title: 'Ronnie Coleman Back and Bicep'
+    size_hint: None, None
+    size: 600, 600
+    auto_dismiss: False
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            source: 'ronnie colemon back and bicep.png'
+        Button:
+            text: 'Close me'
+            size_hint: .5, .1
+            pos_hint: {"center_x":.5, "center_y":.5}
+            on_press: root.dismiss()
+<MyPopup4@Popup>:
+    title: 'The Rocks Leg day '
+    size_hint: None, None
+    size: 600, 600
+    auto_dismiss: False
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            source: 'the rocks leg day.png'
+        Button:
+            text: 'Close me'
+            size_hint: .5, .1
+            pos_hint: {"center_x":.5, "center_y":.5}
+            on_press: root.dismiss()
+<MyPopup5@Popup>:
+    title: 'The 8 hour Arm workout. You must complete 16 sets of each exercise'
+    size_hint: None, None
+    size: 600, 600
+    auto_dismiss: False
+    BoxLayout:
+        orientation: 'vertical'
+        Image:
+            source: '8 hour arm workout.png'
+        Button:
+            text: 'Close me'
+            size_hint: .5, .1
+            pos_hint: {"center_x":.5, "center_y":.5}
+            on_press: root.dismiss()
+<Explore>:
+    FitImage:
+        source:"gym_background.jpg"
+    MDCard:
+        size_hint: .9, .9
+        pos_hint: {"center_x":.5, "center_y":.5}
+    MDLabel:
+        size_hint: 1,.1
+        font_style: "H2"
+        text: "Explore"
+        halign: "center"
+        pos_hint: {"center_x":.5, "center_y":.95}
+        background_color: (1, 1, 1, 1)
+        canvas.before:
+            Color:
+                rgba: self.background_color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+    ScrollView:
+        do_scroll_y: True
+        do_scroll_x: False
+        size_hint: .8, .8
+        pos_hint: {"center_x": .5, "center_y": .5}
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: 2
+            Button:
+                text: 'Chris Bumstead'
+                font_size: '40sp'
+                md_bg_color: "#d50000"
+                on_press: Factory.MyPopup1().open()
+            Image:
+                source:"cbum.png"
+            Widget:
+                size_hint: 1, .5
+            Button:
+                text: 'Arnold Schwarzenegger'
+                font_size: '40sp'
+                md_bg_color: "#d50000"
+                on_press: Factory.MyPopup2().open()
+            Image:
+                source:"arnoldpic.png"
+            Widget:
+                size_hint: 1, .5
+            Button:
+                text: 'Ronnie Coleman'
+                font_size: '40sp'
+                md_bg_color: "#d50000"
+                on_press: Factory.MyPopup3().open()
+            Image:
+                source:"ronnie.png"
+            Widget:
+                size_hint: 1, .5
+            Button:
+                text: 'The rock'
+                font_size: '40sp'
+                md_bg_color: "#d50000"
+                on_press: Factory.MyPopup4().open()
+            Image:
+                source:"the rock.png"
+            Widget:
+                size_hint: 1, .5
+            Button:
+                text: '8 hour arm workout'
+                font_size: '40sp'
+                md_bg_color: "#d50000"
+                on_press: Factory.MyPopup5().open()
+            Image:
+                source:"8hour.png"
+
+
+
+
+
+    MDRaisedButton:
+        id: Go_back
+        text: "Back"
+        icon: "account-arrow-left"
+        md_bg_color: "#d50000"
+        on_press: root.parent.current = "HomeScreen"
+        size_hint: .1, .05
+        pos_hint: {"center_x":.93, "center_y":.95}
+
+
+ ```
 
  <p align="center">
   <img src="https://user-images.githubusercontent.com/111752809/222432502-b2e72ffb-a37d-43f1-8a2e-28ebd6752da8.gif" alt="Example image">
