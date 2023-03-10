@@ -575,31 +575,32 @@ https://www.sportskeeda.com/health-and-fitness/cbum-workout-split-olympia-winner
 Sportskeeda. "CBum Workout Split: Olympia Winner Chris Bumstead's Training Split Explained." Accessed on March 9, 2023.
 
 https://chat.openai.com/chat:
-OpenAI. "OpenAI Chat." Accessed on March 9, 2023.
+Muscle and Strength. https://www.muscleandstrength.com/articles/arnold-schwarzenegger-superset-workout. "Arnold Schwarzenegger Superset Workout Program." Accessed on March 9, 2023.
 
-https://stackoverflow.com/questions/37422382/python-kivy-underline-not-working-in-label:
-Stack Overflow. "Python Kivy Underline Not Working in Label." Accessed on March 9, 2023.
+Revolutionary Program Design. https://revolutionaryprogramdesign.com/ronnie-coleman-training-program/. "Ronnie Coleman Training Program." Accessed on March 9, 2023.
+Shape. https://www.shape.com/celebrities/celebrity-workouts/i-worked-out-dwayne-rock-johnson#:~:text=The%20Rock's%20Workout%20Routine,and%20seven%20are%20rest%20days. "I Worked Out Like Dwayne 'The Rock' Johnson for 3 Weeks—Here's What Happened." Accessed on March 9, 2023.
 
-https://stackoverflow.com/questions/48347569/kivy-limit-values-on-inputtext:
-Stack Overflow. "Kivy Limit Values on InputText." Accessed on March 9, 2023.
+GymTalk. https://gymtalk.com/rich-piana-8-hour-arm-workout/. "The Rich Piana 8 Hour Arm Workout." Accessed on March 3, 2023.
 
-https://stackoverflow.com/questions/44403466/kivy-how-to-add-padding-to-a-text-input:
-Stack Overflow. "Kivy: How to Add Padding to a Text Input." Accessed on March 9, 2023.
+Sportskeeda. https://www.sportskeeda.com/health-and-fitness/cbum-workout-split-olympia-winner-chris-bumstead-s-training-split-explained. "CBum Workout Split: Olympia Winner Chris Bumstead's Training Split Explained." Accessed on March 3, 2023.
 
-https://www.geeksforgeeks.org/python-popup-widget-in-kivy/:
-GeeksforGeeks. "Python | Popup Widget in Kivy." Accessed on March 9, 2023.
+OpenAI. https://chat.openai.com/chat. "OpenAI Chat." Accessed on Feb 27 - March 9, 2023.
 
-https://www.w3schools.com/python/python_inheritance.asp:
-w3schools. "Python Inheritance." Accessed on March 9, 2023.
+Stack Overflow. https://stackoverflow.com/questions/37422382/python-kivy-underline-not-working-in-label. "Python Kivy Underline Not Working in Label." Accessed on March 2, 2023.
 
-https://realpython.com/python-sqlite-sqlalchemy/:
-Real Python. "Python SQLite: A Thorough Guide." Accessed on March 9, 2023.
+Stack Overflow. https://stackoverflow.com/questions/48347569/kivy-limit-values-on-inputtext. "Kivy Limit Values on InputText." Accessed on March 1, 2023.
 
-https://www.programiz.com/python-programming/datetime:
-Programiz. "Python Datetime Module." Accessed on March 9, 2023.
+Stack Overflow. https://stackoverflow.com/questions/44403466/kivy-how-to-add-padding-to-a-text-input. "Kivy: How to Add Padding to a Text Input." Accessed on Feb 26, 2023.
 
-https://docs.python.org/3/library/datetime.html:
-Python Software Foundation. "datetime — Basic Date and Time Types." Accessed on March 9, 2023.
+GeeksforGeeks. https://www.geeksforgeeks.org/python-popup-widget-in-kivy/. "Python | Popup Widget in Kivy." Accessed on Feb 28, 2023.
+
+w3schools. https://www.w3schools.com/python/python_inheritance.asp. "Python Inheritance." Accessed on March 6, 2023.
+
+Real Python. https://realpython.com/python-sqlite-sqlalchemy/. "Python SQLite: A Thorough Guide." Accessed on March 2, 2023.
+
+Programiz. https://www.programiz.com/python-programming/datetime. "Python Datetime Module." Accessed on March 4, 2023.
+
+Python Software Foundation. https://docs.python.org/3/library/datetime.html. "datetime — Basic Date and Time Types." Accessed on March 4, 2023.
 
 
  <p align="center">
