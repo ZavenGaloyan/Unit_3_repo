@@ -98,8 +98,11 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
 | 25 | Github updating       | Just keeping up to date on the development and documentation                 | Soultion Overview | 1 hour     | march 9, | B |
 | 26 | Creating client video | To demonstrate the functionality of the product/application                  | Functionality     | 45 minutes | march 9, | D |
 | 27 | Final check           | To make sure that all of the nessiary criteria have been full filled         | Functionality     | 30 mintues | march 9, | D |
+
 **Table 2** Record of tasks shows the process of planning and development of the product for the client. It's purpose is to keep track of all of the things done to full fill the critera. THis includes the Planned action, Planned Outcome, Design cycle, Time Estimate, Completion Date, and  Criteria
+
  # Criteria C: Development:
+
   ## Techniques Used:
   - Kivy
   - Python
