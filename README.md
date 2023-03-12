@@ -74,7 +74,12 @@ Combining Python, SQL databases, and Kivy can provide an efficient and flexible 
 | 19 | Adding astetics to the page                               | To make overall app more visaully apealing                                                                                                              | Development       | 30 min             | march 5,        | C        |
 | 20 | Validation regarding user inputs                          | To make sure that he app doesn't encounter an error if it were to crash                                                                                 | Development       | 3 hours            | march 5,        | C        |
 | 21 | Statistics page written stats                             | To create written statistics based off of the user inputs on their gym progress                                                                         | Development       | 2 hours            | march 6,        | C        |
-| 22 | Statistics page visaul stats                              | Providing a visul representaion of the users progression in working out based off of their inputs                                                       | Development       | 2 hours       
+| 22 | Statistics page visaul stats                              | Providing a visul representaion of the users progression in working out based off of their inputs                                                       | Development       | 2 hours
+| 23 | Github updating       | To keep Github up to date with the progress being made                       | Soultion Overview | 1 hour     | march 7, | B |
+| 24 | Working on fixing MVP | From the feedback received from the minimum viable product it was fixed upon | Development       | 2 hours    | march 8, | C |
+| 25 | Github updating       | Just keeping up to date on the development and documentation                 | Soultion Overview | 1 hour     | march 9, | B |
+| 26 | Creating client video | To demonstrate the functionality of the product/application                  | Functionality     | 45 minutes | march 9, | D |
+| 27 | Final check           | To make sure that all of the nessiary criteria have been full filled         | Functionality     | 30 mintues | march 9, | D |
  # Criteria C: Development:
   ## Techniques Used:
   - Kivy
