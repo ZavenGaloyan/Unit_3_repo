@@ -1,7 +1,7 @@
  # Quiz 48
  ## Python Code
  ```.py
- import sqlite3
+import sqlite3
 from Seqcure_password import check_password
 
 class database_worker:
@@ -43,236 +43,26 @@ for row in result:
         print(f"{red}Tx(id=1)Error signature{end_code}")
 db.close()
 ```
- ## Kivy Code
-```.kv
-MDScreen:
-    id:bck
-    size: 200, 500
-
-    MDBoxLayout:
-        id: bck
-        size_hint: .8,.9
-        md_bg_color: "#F2F2F2"
-        orientation: "vertical"
-        pos_hint: {"center_x":.5, "center_y":.5}
-        spacing: dp(10)
-
-        MDLabel:
-            text:"Compensation Calculator"
-            halign: "center"
-            font_style:"H4"
-            color: "#222222"
-
-        MDBoxLayout:
-            size_hint_x: .8
-            height: dp(46)
-            valign: "center"
-            md_bg_color: "#FFFFFF"
-            pos_hint: {"center_x":.5, "center_y":.5}
-            spacing: dp(10)
-
-            MDIcon:
-                icon: "plus-circle"
-                pos_hint: {"center_x": .5, "center_y": .5}
-            MDLabel:
-                text:"Base Salary"
-                size_hint_x: .4
-            MDTextField:
-                id:base
-                mode: "rectangle"
-                input_filter:"int"
-                text_color_normal: "#222222"
-                line_color_normal: "#222222"
-                hint_text: "Base Salary"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                on_text:
-                    root.ids.base_label.text = f"{self.text} JPY"
-                    app.update()
-            MDLabel:
-                id: base_label
-                text:" JPY"
-
-        MDBoxLayout:
-            size_hint_x: .8
-            height: dp(46)
-            valign: "center"
-            md_bg_color: "#FFFFFF"
-            pos_hint: {"center_x":.5, "center_y":.5}
-            spacing: dp(10)
-
-
-            MDIcon:
-                icon: "minus-circle"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                color: "#9d0208"
-            MDLabel:
-                text:"Health"
-                size_hint_x: .4
-                color: "#6a040f"
-            MDTextField:
-                id:health
-                mode: "rectangle"
-                input_filter:"int"
-                hint_text: "% Health"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                text_color_normal: "#9d0208"
-                line_color_normal: "#9d0208"
-                on_text:
-                    self.text = str(max(0, min(100, int(self.text or 0))))
-                    app.update()
-            MDLabel:
-                id: health_label
-                text:" JPY"
-                color: "#9d0208"
-
-        MDBoxLayout:
-            size_hint_x: .8
-            height: dp(46)
-            valign: "center"
-            md_bg_color: "#FFFFFF"
-            pos_hint: {"center_x":.5, "center_y":.5}
-            spacing: dp(10)
-
-
-            MDIcon:
-                icon: "minus-circle"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                color: "#9d0208"
-            MDLabel:
-                text: "Pension"
-                size_hint_x: .4
-                color: "#9d0208"
-            MDTextField:
-                id:pension
-                mode: "rectangle"
-                input_filter:"int"
-                hint_text: "% Pension"
-                text_color_normal: "#9d0208"
-                line_color_normal: "#9d0208"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                on_text:
-                    self.text = str(max(0, min(100, int(self.text or 0))))
-                    app.update()
-            MDLabel:
-                id: pension_label
-                text:" JPY"
-                color: "#9d0208"
-
-
-        MDBoxLayout:
-            size_hint_x: .8
-            height: dp(46)
-            valign: "center"
-            md_bg_color: "#FFFFFF"
-            pos_hint: {"center_x":.5, "center_y":.5}
-            spacing: dp(10)
-
-            MDIcon:
-                icon: "minus-circle"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                color: "#9d0208"
-            MDLabel:
-                text:"Income Tax"
-                size_hint_x: .4
-                color: "#9d0208"
-            MDTextField:
-                id:income_tax
-                mode: "rectangle"
-                input_filter:"int"
-                hint_text: "% Income"
-                text_color_normal: "#9d0208"
-                line_color_normal: "#9d0208"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                on_text:
-                    self.text = str(max(0, min(100, int(self.text or 0))))
-                    app.update()
-            MDLabel:
-                id: income_tax_label
-                text:" JPY"
-                color: "#9d0208"
-
-        MDBoxLayout:
-            size_hint_x: .8
-            height: dp(46)
-            valign: "center"
-            md_bg_color: "#FFFFFF"
-            pos_hint: {"center_x":.5, "center_y":.5}
-            spacing: dp(10)
-
-
-            MDIcon:
-                icon: "minus-circle"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                color: "#9d0208"
-            MDLabel:
-                text:"Inhabitant Tax"
-                size_hint_x: .4
-                color: "#9d0208"
-            MDTextField:
-                id:inhabitant
-                mode: "rectangle"
-                input_filter:"int"
-                hint_text: "%  Income"
-                text_color_normal: "#9d0208"
-                line_color_normal: "#9d0208"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                on_text:
-                    self.text = str(max(0, min(100, int(self.text or 0))))
-                    app.update()
-            MDLabel:
-                id: inhabitant_label
-                text:" JPY"
-                color: "#9d0208"
-
-
-        MDBoxLayout:
-            size_hint_x: .8
-            height: dp(46)
-            valign: "center"
-            md_bg_color: "#22223b"
-            pos_hint: {"center_x":.5, "center_y":.5}
-            spacing: dp(10)
-
-            MDLabel:
-                size_hint_x: .5
-            MDIcon:
-                icon: "calculator"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                color: "#F2F2F2"
-            MDLabel:
-                text:"Net Salary"
-                size_hint_x: .4
-                color: "#F2F2F2"
-            MDLabel:
-                id: salary_label
-                text:" JPY"
-                color: "#F2F2F2"
-            MDFloatingActionButton:
-                icon:"content-save-plus"
-                md_bg_color:"#ffc300"
-                icon_color:"#222222"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                on_press:
-                    app.save()
-
-            MDFloatingActionButton:
-                icon:"autorenew"
-                md_bg_color:"#2a9d8f"
-                icon_color:"#222222"
-                pos_hint: {"center_x": .5, "center_y": .5}
-                on_press:
-                    app.clear()
-
-        MDBoxLayout:
-            size_hint: .8, .2
-            valign: "center"
-            md_bg_color: "#FFFFFF"
-            pos_hint: {"center_x":.5, "center_y":.5}
-
-            MDLabel:
-                id: hash
-                halign: "center"
-                text: "----"
-                font_style: "Caption"
+## Evidence
+```
+Due to the hashing algorithm changeing it doenst work with the given database. However this is what the result would look like
+Tx(id=1)Signature matches
+Tx(id=1)Signature matches
+Tx(id=1)Error signature
+Tx(id=1)Error signature
+Tx(id=1)Signature matches
 ```
 
+```.py
+Traceback (most recent call last):
+  File "C:\Users\glute\PycharmProjects\pythonProject\Unit-3\Quiz-048.py", line 33, in <module>
+    equal = check_password(hashed_password=hash, user_password=string_hash)
+  File "C:\Users\glute\PycharmProjects\pythonProject\Unit-3\Seqcure_password.py", line 9, in check_password
+$5$rounds=30000$lbefAGUoZ1pv55jl$oz7mU.bJYGLRBXsLIvIJyThDuZoSdXXDPZN7I1VrPq9
+    return hasher.verify(user_password, hashed_password)
+  File "C:\Users\glute\PycharmProjects\pythonProject\venv2\lib\site-packages\passlib\utils\handlers.py", line 788, in verify
+    self = cls.from_string(hash, **context)
+  File "C:\Users\glute\PycharmProjects\pythonProject\venv2\lib\site-packages\passlib\handlers\sha2_crypt.py", line 307, in from_string
+    raise uh.exc.InvalidHashError(cls)
+ValueError: not a valid sha256_crypt hash
+```
