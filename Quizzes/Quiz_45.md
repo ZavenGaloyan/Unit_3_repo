@@ -6,3 +6,5 @@ Select sum(amount) from transactions where transaction_type is "withdraw" group 
 
 Select * from customers where customer_id=12;
 ```
+## Evidence
+![image](https://user-images.githubusercontent.com/111752809/225641741-eab111a3-73fd-41db-be80-e170a370ac7f.png)
